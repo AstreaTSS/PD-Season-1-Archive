@@ -1,0 +1,1423 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Danganronpa: Prospective Despair - mitsuos-diary</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        /* General */
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
+    font-weight: 700;
+}
+
+body {
+    font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    object-fit: contain;
+}
+
+.markdown {
+    max-width: 100%;
+    line-height: 1.3;
+    overflow-wrap: break-word;
+}
+
+.preserve-whitespace {
+    white-space: pre-wrap;
+}
+
+.spoiler {
+    /* width: fit-content; */
+    display: inline-block;
+    /* This is more consistent across browsers, the old attribute worked well under Chrome but not FireFox. */
+}
+
+.spoiler--hidden {
+    cursor: pointer;
+}
+
+.spoiler-text {
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-text {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler--hidden .spoiler-text::selection {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-image {
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.spoiler--hidden .spoiler-image * {
+    filter: blur(44px);
+}
+
+.spoiler--hidden .spoiler-image:after {
+    content: "SPOILER";
+    color: #dcddde;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 600;
+    padding: 100%;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    font-size: 0.9em;
+}
+
+.spoiler--hidden:hover .spoiler-image:after {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.quote {
+    margin: 0.1em 0;
+    padding-left: 0.6em;
+    border-left: 4px solid;
+    border-radius: 3px;
+}
+
+.pre {
+    font-family: "Consolas", "Courier New", Courier, monospace;
+}
+
+.pre--multiline {
+    margin-top: 0.25em;
+    padding: 0.5em;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+.pre--inline {
+    padding: 2px;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+.mention {
+    border-radius: 3px;
+    padding: 0 2px;
+    color: #7289da;
+    background: rgba(114, 137, 218, .1);
+    font-weight: 500;
+}
+
+.emoji {
+    width: 1.25em;
+    height: 1.25em;
+    margin: 0 0.06em;
+    vertical-align: -0.4em;
+}
+
+.emoji--small {
+    width: 1em;
+    height: 1em;
+}
+
+.emoji--large {
+    width: 2.8em;
+    height: 2.8em;
+}
+
+/* Preamble */
+
+.preamble {
+    display: grid;
+    margin: 0 0.3em 0.6em 0.3em;
+    max-width: 100%;
+    grid-template-columns: auto 1fr;
+}
+
+.preamble__guild-icon-container {
+    grid-column: 1;
+}
+
+.preamble__guild-icon {
+    max-width: 88px;
+    max-height: 88px;
+}
+
+.preamble__entries-container {
+    grid-column: 2;
+    margin-left: 0.6em;
+}
+
+.preamble__entry {
+    font-size: 1.4em;
+}
+
+.preamble__entry--small {
+    font-size: 1em;
+}
+
+/* Chatlog */
+
+.chatlog {
+    max-width: 100%;
+}
+
+.chatlog__message-group {
+    display: grid;
+    margin: 0 0.6em;
+    padding: 0.9em 0;
+    border-top: 1px solid;
+    grid-template-columns: auto 1fr;
+}
+
+.chatlog__reference-symbol {
+    grid-column: 1;
+    border-style: solid;
+    border-width: 2px 0 0 2px;
+    border-radius: 8px 0 0 0;
+    margin-left: 16px;
+    margin-top: 8px;
+}
+
+.chatlog__reference {
+    display: flex;
+    grid-column: 2;
+    margin-left: 1.2em;
+    margin-bottom: 0.25em;
+    font-size: 0.875em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    align-items: center;
+}
+
+.chatlog__reference-avatar {
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+    margin-right: 0.25em;
+}
+
+.chatlog__reference-name {
+    margin-right: 0.25em;
+    font-weight: 600;
+}
+
+.chatlog__reference-link {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chatlog__reference-link:hover {
+    text-decoration: none;
+}
+
+.chatlog__reference-content > * {
+    display: inline;
+}
+
+.chatlog__reference-edited-timestamp {
+    margin-left: 0.25em;
+    font-size: 0.8em;
+}
+
+.chatlog__author-avatar-container {
+    grid-column: 1;
+    width: 40px;
+    height: 40px;
+}
+
+.chatlog__author-avatar {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+.chatlog__messages {
+    grid-column: 2;
+    margin-left: 1.2em;
+    min-width: 50%;
+}
+
+.chatlog__author-name {
+    font-weight: 500;
+}
+
+.chatlog__timestamp {
+    margin-left: 0.3em;
+    font-size: 0.75em;
+}
+
+.chatlog__message {
+    padding: 0.1em 0.3em;
+    margin: 0 -0.3em;
+    background-color: transparent;
+    transition: background-color 1s ease;
+}
+
+.chatlog__content {
+    font-size: 0.95em;
+    word-wrap: break-word;
+}
+
+.chatlog__edited-timestamp {
+    margin-left: 0.15em;
+    font-size: 0.8em;
+}
+
+.chatlog__attachment {
+    margin-top: 0.3em;
+}
+
+.chatlog__attachment-thumbnail {
+    vertical-align: top;
+    max-width: 45vw;
+    max-height: 500px;
+    border-radius: 3px;
+}
+
+.chatlog__attachment-container {
+    height: 40px;
+    width: 100%;
+    max-width: 520px;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.chatlog__attachment-icon {
+    float: left;
+    height: 100%;
+    margin-right: 10px;
+}
+
+.chatlog__attachment-icon > .a {
+    fill: #f4f5fb;
+    d: path("M50,935a25,25,0,0,1-25-25V50A25,25,0,0,1,50,25H519.6L695,201.32V910a25,25,0,0,1-25,25Z");
+}
+
+.chatlog__attachment-icon > .b {
+    fill: #7789c4;
+    d: path("M509.21,50,670,211.63V910H50V50H509.21M530,0H50A50,50,0,0,0,0,50V910a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50h0V191Z");
+}
+
+.chatlog__attachment-icon > .c {
+    fill: #f4f5fb;
+    d: path("M530,215a25,25,0,0,1-25-25V50a25,25,0,0,1,16.23-23.41L693.41,198.77A25,25,0,0,1,670,215Z");
+}
+
+.chatlog__attachment-icon > .d {
+    fill: #7789c4;
+    d: path("M530,70.71,649.29,190H530V70.71M530,0a50,50,0,0,0-50,50V190a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50Z");
+}
+
+.chatlog__attachment-filesize {
+    color: #72767d;
+    font-size: 12px;
+}
+
+.chatlog__attachment-filename {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.chatlog__embed {
+    display: flex;
+    margin-top: 0.3em;
+    max-width: 520px;
+}
+
+.chatlog__embed-color-pill {
+    flex-shrink: 0;
+    width: 0.25em;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.chatlog__embed-content-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em 0.6em;
+    border: 1px solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.chatlog__embed-content {
+    display: flex;
+    width: 100%;
+}
+
+.chatlog__embed-text {
+    flex: 1;
+}
+
+.chatlog__embed-author {
+    display: flex;
+    margin-bottom: 0.3em;
+    align-items: center;
+}
+
+.chatlog__embed-author-icon {
+    margin-right: 0.5em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.chatlog__embed-author-name {
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-title {
+    margin-bottom: 0.2em;
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-description {
+    font-weight: 500;
+    font-size: 0.85em;
+}
+
+.chatlog__embed-fields {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chatlog__embed-field {
+    flex: 0;
+    min-width: 100%;
+    max-width: 506px;
+    padding-top: 0.6em;
+    font-size: 0.875em;
+}
+
+.chatlog__embed-field--inline {
+    flex: 1;
+    flex-basis: auto;
+    min-width: 150px;
+}
+
+.chatlog__embed-field-name {
+    margin-bottom: 0.2em;
+    font-weight: 600;
+}
+
+.chatlog__embed-field-value {
+    font-weight: 500;
+}
+
+.chatlog__embed-thumbnail {
+    flex: 0;
+    margin-left: 1.2em;
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-image-container {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-image {
+    max-width: 500px;
+    max-height: 400px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-footer {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-footer-icon {
+    margin-right: 0.2em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.chatlog__embed-footer-text {
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+.chatlog__reactions {
+    display: flex;
+}
+
+.chatlog__reaction {
+    display: flex;
+    align-items: center;
+    margin: 0.35em 0.1em 0.1em 0.1em;
+    padding: 0.2em 0.35em;
+    border-radius: 3px;
+}
+
+.chatlog__reaction-count {
+    min-width: 9px;
+    margin-left: 0.35em;
+    font-size: 0.875em;
+}
+
+.chatlog__bot-tag {
+    position: relative;
+    top: -.2em;
+    margin-left: 0.3em;
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    vertical-align: middle;
+    line-height: 1.3;
+    background: #7289da;
+    color: #ffffff;
+    font-size: 0.625em;
+    font-weight: 500;
+}
+
+/* Postamble */
+
+.postamble {
+    margin: 1.4em 0.3em 0.6em 0.3em;
+    padding: 1em;
+    border-top: 1px solid;
+}
+    </style>
+    <style>
+        /* General */
+
+body {
+    background-color: #36393e;
+    color: #dcddde;
+}
+
+a {
+    color: #0096cf;
+}
+
+.spoiler-text {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.spoiler--hidden .spoiler-text {
+    background-color: #202225;
+}
+
+.spoiler--hidden:hover .spoiler-text {
+    background-color: rgba(32, 34, 37, 0.8);
+}
+
+.quote {
+    border-color: #4f545c;
+}
+
+.pre {
+    background-color: #2f3136 !important;
+}
+
+.pre--multiline {
+    border-color: #282b30 !important;
+    color: #b9bbbe !important;
+}
+
+/* === Preamble === */
+
+.preamble__entry {
+    color: #ffffff;
+}
+
+/* Chatlog */
+
+.chatlog__message-group {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.chatlog__reference-symbol {
+    border-color: #4f545c;
+}
+
+.chatlog__reference {
+    color: #b5b6b8;
+}
+
+.chatlog__reference-link {
+    color: #b5b6b8;
+}
+
+.chatlog__reference-link:hover {
+    color: #ffffff;
+}
+
+.chatlog__reference-edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__author-name {
+    color: #ffffff;
+}
+
+.chatlog__timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__message--highlighted {
+    background-color: rgba(114, 137, 218, 0.2) !important;
+}
+
+.chatlog__message--pinned {
+    background-color: rgba(249, 168, 37, 0.05);
+}
+
+.chatlog__attachment-container {
+    background-color: #2f3136;
+    border-color: #292b2f;
+}
+
+.chatlog__edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__embed-color-pill--default {
+    background-color: rgba(79, 84, 92, 1);
+}
+
+.chatlog__embed-content-container {
+    background-color: rgba(46, 48, 54, 0.3);
+    border-color: rgba(46, 48, 54, 0.6);
+}
+
+.chatlog__embed-author-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-author-name-link {
+    color: #ffffff;
+}
+
+.chatlog__embed-title {
+    color: #ffffff;
+}
+
+.chatlog__embed-description {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-field-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-field-value {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-footer {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__reaction {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.chatlog__reaction-count {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Postamble */
+
+.postamble {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.postamble__entry {
+    color: #ffffff;
+}
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(block => hljs.highlightBlock(block));
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler--hidden');
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/a6bf72058896bd5a7feafae436203daa-25C62.png" alt="Guild icon">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">Danganronpa: Prospective Despair</div>
+        <div class="preamble__entry">Diaries (KG) / mitsuos-diary</div>
+
+
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/0de4293d8ca209aa25f211b6c0d36d96-2A452.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="A Person#7738" data-user-id="588749122643951616" style="color: rgb(76,169,206)">Person</span>
+
+
+        <span class="chatlog__timestamp">18-Jan-21 12:01 AM</span>
+
+            <div class="chatlog__message " data-message-id="800590740396441661" id="message-800590740396441661">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(( <span class="mention" title="Mass#6343">@Mitsuo Hideyoshi | Mass</span> brrr</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">18-Jan-21 12:02 AM</span>
+
+            <div class="chatlog__message " data-message-id="800590866103271469" id="message-800590866103271469">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Thanks server mom)</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/0de4293d8ca209aa25f211b6c0d36d96-2A452.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="A Person#7738" data-user-id="588749122643951616" style="color: rgb(76,169,206)">Person</span>
+
+
+        <span class="chatlog__timestamp">18-Jan-21 12:02 AM</span>
+
+            <div class="chatlog__message " data-message-id="800590899583123468" id="message-800590899583123468">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((Did i spell it right</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="800590923032690738" id="message-800590923032690738">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((Also im a mom?</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">18-Jan-21 12:02 AM</span>
+
+            <div class="chatlog__message " data-message-id="800590923402313729" id="message-800590923402313729">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Yep)</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/0de4293d8ca209aa25f211b6c0d36d96-2A452.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="A Person#7738" data-user-id="588749122643951616" style="color: rgb(76,169,206)">Person</span>
+
+
+        <span class="chatlog__timestamp">18-Jan-21 12:02 AM</span>
+
+            <div class="chatlog__message " data-message-id="800591001940394034" id="message-800591001940394034">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((eh, im fine with being a mother</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">18-Jan-21 12:03 AM</span>
+
+            <div class="chatlog__message " data-message-id="800591064418222120" id="message-800591064418222120">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">UwU)</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/0de4293d8ca209aa25f211b6c0d36d96-2A452.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="A Person#7738" data-user-id="588749122643951616" style="color: rgb(76,169,206)">Person</span>
+
+
+        <span class="chatlog__timestamp">18-Jan-21 12:03 AM</span>
+
+            <div class="chatlog__message " data-message-id="800591082660298802" id="message-800591082660298802">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((We should stop, this is the diary after all</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">18-Jan-21 12:03 AM</span>
+
+            <div class="chatlog__message " data-message-id="800591144081686548" id="message-800591144081686548">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Aightt thanks agaiin)</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/87cf5b7b42153cef8a4e7ac88b0af174-DDE8A.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Sonic49#7171" data-user-id="229350299909881876" style="color: rgb(67,120,252)">Sonic49 | ???</span>
+
+
+        <span class="chatlog__timestamp">18-Jan-21 12:17 AM</span>
+
+            <div class="chatlog__message " data-message-id="800594662913474561" id="message-800594662913474561">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(e person did most of this for me but:
+(you can do pretty much whatever with this channel
+(and if you want to reveal it in case you die, just let an admin or me know</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">18-Jan-21 02:08 AM</span>
+
+            <div class="chatlog__message " data-message-id="800622721213792287" id="message-800622721213792287">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Oki dok)</span>
+
+                                <span class="chatlog__edited-timestamp" title="18-Jan-21 02:08 AM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">18-Jan-21 04:35 AM</span>
+
+            <div class="chatlog__message " data-message-id="800659742833901609" id="message-800659742833901609">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">DAY 01</div>
+.
+.
+Ah jeez... What the hell did I get myself into... My first journal entry and all I can muster are feelings of despair and hopelessness.
+
+Alright, focus Kataoka.
+
+To recall and get a better understanding of what&#39;s going on here, I&#39;ve decided to log everything here by the time the day ends. What uses one or even I myself can make out of these is still cloudy, since I haven&#39;t done my portion of looking around yet.
+
+Anyways, here&#39;s my recount of what happened today;
+
+I open my eyes to the scene of an unfamiliar and futuristic room with lots of people just as clueless as I am regarding where we were. One thing I did  feel immediately after would be this feeling of disconnect with my body and the floor beneath me, one that made me feel that I could fall at any given moment. It felt as if I was in a tall structure of some kind. I tried to pay attention to everyone&#39;s response, which were varied in a lot of different ways, particularly through their attitude, their general feel, so on and so forth. They were all very interesting characters, ones that particularly do not mingle with the crowd but are instead the center of attention. The ones leading crowds. I, for one, am more of the former. My presence was basically non-existant as these peoplr exerted their colorful personalities and backgrounds.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">18-Jan-21 04:54 AM</span>
+
+            <div class="chatlog__message " data-message-id="800664280194220073" id="message-800664280194220073">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">.
+.
+Though soon after, our &#39;host&#39; made his presence known via the table in front of us projecting his moving image. The fellow struck me as cold the first time I saw him. He definitely feels like an antagonist and his words after were concise and short. 
+
+What a thrill! Such a menacing figure enacting his clearly superior authority upon us strangers and immediately stating his objective with no more than just a few words~, truly a spectacle to beh--
+
+<em>Ahem.</em>
+
+Anyways, it was around this moment that everyone got equally perplexed but with varied reactions as per usual. While most were assuming this was some elaborate joke of some kind, those words strike me as slightly terrifying. I know that he purposefully didn&#39;t disclose any further details to get some kind of reaction out everyone but his word choice was enough to make everyone ruffle their feathers. Of course, there were among us skeptics that did not believe his words and underestimated its weight.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="800664320928514058" id="message-800664320928514058">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">.
+.
+.
+So. For good measure, I assume, he dropped a...
+
+...
+
+A... <span class="spoiler spoiler--hidden" onclick="showSpoiler(event, this)"><span class="spoiler-text">mangled corpse thats been tampered with so much its beyond any form of recovery or identification.</span></span> That awful sight is still fresh in my mind despite it being hours after witnessing it. How can one even forget about that scene...
+
+Regardless, this solidified his stance and silenced those who doubted him. Then, we all scattered to our own ways. I heard some were searching the area, some were probably like me. A crying mess thats unable to accept what sort of shitshow they got themselves into. I, paid no heed to everything else and just sobbed the day away.
+
+There&#39;s a few things I can take from this summary. For one thing, whoever the hell this man is, might not be alone. He might have backers or perhaps he, himself, is a pawn of something much bigger. I cant draw any conclusions until Im certain I have enough evidence. Next is that, Im practically invisible to everyone. Granted, we all just met today, so I cant expect them to know literally everyone on a first name basis. What I mean by that is that my presence is, well, pathetic. Compared to these people, Im not even close to their standing in society.
+
+Kinda makes me feel a bit shy. They&#39;re all equally amazing people and Im just...An average joe, at best. Well, we&#39;re all stuck in here together now, so we gotta stick together and help each other out, considering that&#39;s the best possible way we can all get out of here unscathed. So, I hope I can get along with them tommorrow. I may be invisible but I want to be around them too.
+
+I guess that concludes day one. I might as well head to bed after this and look around starting tomorrow.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">21-Jan-21 04:11 AM</span>
+
+            <div class="chatlog__message " data-message-id="801740637271228427" id="message-801740637271228427">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">DAY 04</div>
+.
+.
+Its been a while since Ive wrote in this but Ive not done much for the past few days. Theres not an exact schedule I have for writing these entries and Im kind of just writing them periodically.
+
+The most prominent thing is that we&#39;ve possibly an endless amount of  food supply. The machine they use to make them was so fancy that I didn&#39;t even grasp the functionality of it until I sat down to think about it. Our situation with food isn&#39;t too bad to say the least. Onto things I&#39;ve personally done. Well, its not a lot really. All Ive found were rooms filled to the brim with weapons and a mini aquarium. Both don&#39;t have anything stand-offish, despite the grand prospect they represent. So, no new means of escape or any clues about our particular situation. Its...really disappointing. I figured that I should get some one on one time with Mr. Glasses for anything that might be of use.
+
+For one thing, I made a new friend! He&#39;s actually so nice despite being an Ultimate. At first, I thought people like those would be really narcissistic because of their place in society but nope! He&#39;s quite a humble fellow in spite of both his title and financial situation. Speaking of, he was generous enough to gift me a ring. And Im still processing that. Never in my life would I ever think that Id receive such a thing from someone so famous! I do think its a bit too much though.
+
+Welp. Not much else to report. Gonna try and probe Mr. Stoic Mcgee tommorrow for possible answers. For now, Ill see you later.</span>
+
+                                <span class="chatlog__edited-timestamp" title="21-Jan-21 04:11 AM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">25-Jan-21 06:07 AM</span>
+
+            <div class="chatlog__message " data-message-id="803219390262542397" id="message-803219390262542397">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">DAY 08</div>
+.
+.
+.
+Hey again. Been a good four days since Ive written in this book. I wake up to the same ceiling time and time again that its become routine at this point. Gosh. How much longer do I have to keep this up? Its tiring. Its actually tiring when I have to go out of my way to do it like this every single time. Wonder if Ill ever be replaced by it....
+
+Nah. Its just a fake anyways. Im still me. Anyways. A lot has happened the past four days. Namely, everyone being sleep deprived. Its a way Blake used to entice us to kill each other, especially when we&#39;re all vulnerable like that. It went on for a good two whole days. It was fucking exhausting, I swear. I was damn sure I was seeing Mayumi somewhere in this room. Anyways, eventually, one of us succumbed to that and actually killed someone. It was a nobody. Of course, I was shocked nonetheless but I had to play up my reaction a bit more. Which is more than anyone else. They all seem nonchalant about what happened. I wonder how much they saw that a body doesn&#39;t even faze them.
+
+We had a class trial to determine who the killer is. I can&#39;t say I helped out a lot thanks to my overthinking nature but I can&#39;t be helped because Glasses McGee had to tamper the scene, making it pretty hard for me to distinguish what was fake and what was fact. Still managed to get the guy and let&#39;s just say.. He was offed pretty damn hard. You could probably no longer recognize him after all the things that machine did. God, just sends a shiver down my spine.
+
+What happened after the trial wasn&#39;t much either. A new area opened up and I havent even explored the whole side that was open to us prior today. Ill definitely prioritize the new area first thought.
+
+As for personal development, I made a &#39;friend&#39; called Aiko. She&#39;s an...Interesting one. Ill go more in depth at a later time. Ill probably write like last time. For now, im signing off.</span>
+
+                                <span class="chatlog__edited-timestamp" title="29-Jan-21 08:18 AM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">29-Jan-21 08:05 AM</span>
+
+            <div class="chatlog__message " data-message-id="804698823577960500" id="message-804698823577960500">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">DAY 12</div>
+.
+.
+.</span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="Mastermindstrueidentity" title="Mastermindstrueidentity" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/786629561777258517-4F98D.png">
+                                <span class="chatlog__reaction-count">1</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">01-Feb-21 02:44 AM</span>
+
+            <div class="chatlog__message " data-message-id="805705115079409674" id="message-805705115079409674">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">DAY 15</div>
+.
+.
+.
+I can&#39;t believe I&#39;ve been so naive. I genuinely thought that some people here weren&#39;t as dangerous as I initially thought. In fact, sooner or later, I would&#39;ve been comfortable revealing my talent to them and actually... Act like myself. After what happened today, after <em>all</em> that happened today. I realize its all but a pipe dream. A hopeless delusion that I perceived as truth. A truth where I could.. Actually be friends with people other than Mayumi.
+
+That Sasaki bastard was insane. His unstable mind led him to horrifically dismember one of them and even electrocute another. And he <strong>dares</strong> to joke about that..? QUIT FUCKING AROUND. Damn thing was so crazy, I almost dropped my act. As it turns out. I don&#39;t know everyone here. Not enough. To think that a shy and reserved person like him would turn out like this is a big eye-opener. Motives definitely played a part in his descent to insanity but that doesn&#39;t fucking excuse him from doing what he did.
+
+Not everyone is as they seem here. Hell, even I am such a case. But even I don&#39;t harbor a nasty killing instinct like that. In which case... Who can I trust. Is Derek fine? How about Aiko? What about Manami? What about Rena? Are they keeping secrets like that as well. God I just don&#39;t want to THINK ABOUT THIS ANYMORE!
+
+I WAS JUST WRITING BOOKS AND NOW ALL OF A SUDDEN IM A FUCKING ULTIMATE?! THATS FUCKING BULL. I DIDN&#39;T FOR ANY OF THIS. AND NOW HERE I AM, SEPARATED FROM MAYUMI..
+
+God, Mayumi.. What do I do...?  You would know, right? You always did. You made me who I am today. The world didn&#39;t seem so dull when you showed me a different side to it.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="805705202320801792" id="message-805705202320801792">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">.
+.
+.
+I want out of here.. I really want out of here... I have to get to know people here and gather information..
+
+Information.
+
+Inform..
+
+Info...
+
+ï̒̿n͋͑͛f͎̿͝o̞͠ĭ͉̚n̖̂̈f̛̦o̱͐̕ï̱n̝̅͡f͉͒͋ő́͡iǹ̓͠f͌̆̾oi̎͗̈́nf̂̓̚o̬̎͝i̜͑n̒̅̊f̜̀ơ͗͆i͋̃̀n̒̾͝f̨̍oî̇͑n̳̾f̑͋̀ő͐̅i̕͞͝n̅̋̉f̨͗ơ̂̌i̡̽nf̛̅̀o͈͞ĭ̿͞n̟̅͗fo̔͊́i͈̇n̠͆̈f̢̅͒ö́͛͞ỉ͈͞n̨̈̐f̛̍̉o
+
+How much longer does my role have to be Kataoka...? That was me when I just blindly followed people. Because thats how you get by in Japan. You follow the leader of the pack and stay in line.
+
+How will I face everyone tommorrow after that. Should I be wary of them? Maybe I could just act like nothing happened. Yeah. That&#39;s an option too. Im so good at faking myself, after all. Im so good at it that Im even lying to my own true feelings. Imagine writing in a diary, one where your thoughts are confined and no one would be able to see them. You still lie to yourself there and act like a complete fake. Im tired. Tired. Tired of everything happening here. I guess I&#39;ll see how it goes tommorow.</span>
+
+                                <span class="chatlog__edited-timestamp" title="01-Feb-21 02:45 AM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="805705919542460416" id="message-805705919542460416">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">.
+.
+.
+.
+At the very last page of the diary</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="805705994978066462" id="message-805705994978066462">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">.
+.
+.
+To Aiko: 
+
+A bit fucking cringy of me to make a note like this but I have to have a will in case I die some way.
+
+First of all, stop crying if you happen to get your hands on this when I die. It doesn&#39;t suit a girl like you. Next, I want to say is that Im sorry. For lying to you all this time. I wasn&#39;t the man named Kataoka that you grew so fond of. In fact. Im just like you. Just a really quiet person that doesn&#39;t find the world all too stimulating. With one thing keeping us going. Though, I found what I wanted to do a bit late, Im glad you found yours early on.
+
+To be honest, you were pretty annoying at first. You didn&#39;t know how to talk to people, you keep sleeping mid-chat and you just look dead. Like, way to kill the mood. Still, your level of growth astounds me so. Its almost as if I was looking at a reflection of myself. You&#39;re probably the one true friend I had in this journey and that may never change even if I make new ones along the way
+
+Just remember that even when Im gone, just continue going forward. I gave you the push you need, now just manage it yourself. You&#39;re all grown up now from when I first talked to you. So be sure to use every ounce of it.
+
+Get to the end for your own sake. I&#39;ll be with you all the way.
+
+Best wishes,
+
+Mitsuo Hideyoshi</span>
+
+                                <span class="chatlog__edited-timestamp" title="01-Feb-21 02:49 AM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">16-Feb-21 09:30 AM</span>
+
+            <div class="chatlog__message " data-message-id="811243057743003729" id="message-811243057743003729">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">DAY 31</div>
+.
+.
+.
+Hey. Its been a while since my last entry. Its been... About a month since I first got here... Its   really hard to wrap my head around that. How Ive only been here for a month, when all of what happened here took place in the span of years. Our numbers have   Thinned significantly. The more kills that take place the bigger the available areas become. And   The emptier they feel. To say that the experience here has taken a toll on me mentally would be an understatement. Safe to say Im just nearing that edge already. That steep cliff that&#39;ll lead me to a nosedive to crazy town. Thank god...I have a few people left that I genuinely care for. If they croaked, I don&#39;t know if Ill stay sane. Simply having Mayumi and Aiko in my mind as the motivation I need to push forward is just... Not enough. I can&#39;t even see Mayumi and Aiko...
+
+Aiko is...</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="811243110230523914" id="message-811243110230523914">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">.
+.
+.
+Anyways. We&#39;re nearing the climax it seems. The whole building shook like a  9.0 magnitude earthquake just hit this part of the world and Blake assures everyone that everything is fine. Emilia plans to pin Blake into a corner by killing off the other two hosts. One of which, Ill be landing the killing blow on. I don&#39;t know if Ill freeze when the time comes but Ive been meaning to kill the fucker for a long time now, especially after what he said about Aiko. But...That means.. Ill be getting my hands dirty. Ill have to kill someone. No matter the cause,
+
+Murder is still murder.
+
+To think Id have blood on my hands, its insane to even think about. That aside, we have no guarantee if her plan will work. For one thing, its all a huge gamble because she&#39;s working with loopholes. Thing is, Blake could just go, &#39;eh, fuck it&#39; and kill all of the rule-breakers. And thats the gamble. Will he actually care or will he proceed with his signature coldness. Only time will tell. If I dont make another entry after this one, well, the answer will be clear.
+
+This&#39;ll be my last entry before the plan commences. I was hoping that if i could get my hands as far away from the plan as possible and act like I have no association with them, I could get away from a potential punishment but... That&#39;d be a pretty dick move. Oh well. Guess Ill just do it.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/87cf5b7b42153cef8a4e7ac88b0af174-DDE8A.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Sonic49#7171" data-user-id="229350299909881876" style="color: rgb(67,120,252)">Sonic49 | ???</span>
+
+
+        <span class="chatlog__timestamp">07-Mar-21 03:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="818218847735513158" id="message-818218847735513158">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(do you wish to reveal this diary, or do you wish for it to stay forever hidden?</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20mitsuos-diary%20%5B800590581466136616%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">07-Mar-21 05:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="818248904721563658" id="message-818248904721563658">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Reveal it daddy why not <img class="emoji " alt="🙈" title="🙈" src="https://twemoji.maxcdn.com/2/72x72/1f648.png">))</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+</div>
+
+<div class="postamble">
+    <div class="postamble__entry">Exported 25 message(s)</div>
+</div>
+
+</body>
+
+</html>

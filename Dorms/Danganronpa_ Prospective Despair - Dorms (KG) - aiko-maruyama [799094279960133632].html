@@ -1,0 +1,2675 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Danganronpa: Prospective Despair - aiko-maruyama</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        /* General */
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
+    font-weight: 700;
+}
+
+body {
+    font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    object-fit: contain;
+}
+
+.markdown {
+    max-width: 100%;
+    line-height: 1.3;
+    overflow-wrap: break-word;
+}
+
+.preserve-whitespace {
+    white-space: pre-wrap;
+}
+
+.spoiler {
+    /* width: fit-content; */
+    display: inline-block;
+    /* This is more consistent across browsers, the old attribute worked well under Chrome but not FireFox. */
+}
+
+.spoiler--hidden {
+    cursor: pointer;
+}
+
+.spoiler-text {
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-text {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler--hidden .spoiler-text::selection {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-image {
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.spoiler--hidden .spoiler-image * {
+    filter: blur(44px);
+}
+
+.spoiler--hidden .spoiler-image:after {
+    content: "SPOILER";
+    color: #dcddde;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 600;
+    padding: 100%;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    font-size: 0.9em;
+}
+
+.spoiler--hidden:hover .spoiler-image:after {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.quote {
+    margin: 0.1em 0;
+    padding-left: 0.6em;
+    border-left: 4px solid;
+    border-radius: 3px;
+}
+
+.pre {
+    font-family: "Consolas", "Courier New", Courier, monospace;
+}
+
+.pre--multiline {
+    margin-top: 0.25em;
+    padding: 0.5em;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+.pre--inline {
+    padding: 2px;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+.mention {
+    border-radius: 3px;
+    padding: 0 2px;
+    color: #7289da;
+    background: rgba(114, 137, 218, .1);
+    font-weight: 500;
+}
+
+.emoji {
+    width: 1.25em;
+    height: 1.25em;
+    margin: 0 0.06em;
+    vertical-align: -0.4em;
+}
+
+.emoji--small {
+    width: 1em;
+    height: 1em;
+}
+
+.emoji--large {
+    width: 2.8em;
+    height: 2.8em;
+}
+
+/* Preamble */
+
+.preamble {
+    display: grid;
+    margin: 0 0.3em 0.6em 0.3em;
+    max-width: 100%;
+    grid-template-columns: auto 1fr;
+}
+
+.preamble__guild-icon-container {
+    grid-column: 1;
+}
+
+.preamble__guild-icon {
+    max-width: 88px;
+    max-height: 88px;
+}
+
+.preamble__entries-container {
+    grid-column: 2;
+    margin-left: 0.6em;
+}
+
+.preamble__entry {
+    font-size: 1.4em;
+}
+
+.preamble__entry--small {
+    font-size: 1em;
+}
+
+/* Chatlog */
+
+.chatlog {
+    max-width: 100%;
+}
+
+.chatlog__message-group {
+    display: grid;
+    margin: 0 0.6em;
+    padding: 0.9em 0;
+    border-top: 1px solid;
+    grid-template-columns: auto 1fr;
+}
+
+.chatlog__reference-symbol {
+    grid-column: 1;
+    border-style: solid;
+    border-width: 2px 0 0 2px;
+    border-radius: 8px 0 0 0;
+    margin-left: 16px;
+    margin-top: 8px;
+}
+
+.chatlog__reference {
+    display: flex;
+    grid-column: 2;
+    margin-left: 1.2em;
+    margin-bottom: 0.25em;
+    font-size: 0.875em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    align-items: center;
+}
+
+.chatlog__reference-avatar {
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+    margin-right: 0.25em;
+}
+
+.chatlog__reference-name {
+    margin-right: 0.25em;
+    font-weight: 600;
+}
+
+.chatlog__reference-link {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chatlog__reference-link:hover {
+    text-decoration: none;
+}
+
+.chatlog__reference-content > * {
+    display: inline;
+}
+
+.chatlog__reference-edited-timestamp {
+    margin-left: 0.25em;
+    font-size: 0.8em;
+}
+
+.chatlog__author-avatar-container {
+    grid-column: 1;
+    width: 40px;
+    height: 40px;
+}
+
+.chatlog__author-avatar {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+.chatlog__messages {
+    grid-column: 2;
+    margin-left: 1.2em;
+    min-width: 50%;
+}
+
+.chatlog__author-name {
+    font-weight: 500;
+}
+
+.chatlog__timestamp {
+    margin-left: 0.3em;
+    font-size: 0.75em;
+}
+
+.chatlog__message {
+    padding: 0.1em 0.3em;
+    margin: 0 -0.3em;
+    background-color: transparent;
+    transition: background-color 1s ease;
+}
+
+.chatlog__content {
+    font-size: 0.95em;
+    word-wrap: break-word;
+}
+
+.chatlog__edited-timestamp {
+    margin-left: 0.15em;
+    font-size: 0.8em;
+}
+
+.chatlog__attachment {
+    margin-top: 0.3em;
+}
+
+.chatlog__attachment-thumbnail {
+    vertical-align: top;
+    max-width: 45vw;
+    max-height: 500px;
+    border-radius: 3px;
+}
+
+.chatlog__attachment-container {
+    height: 40px;
+    width: 100%;
+    max-width: 520px;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.chatlog__attachment-icon {
+    float: left;
+    height: 100%;
+    margin-right: 10px;
+}
+
+.chatlog__attachment-icon > .a {
+    fill: #f4f5fb;
+    d: path("M50,935a25,25,0,0,1-25-25V50A25,25,0,0,1,50,25H519.6L695,201.32V910a25,25,0,0,1-25,25Z");
+}
+
+.chatlog__attachment-icon > .b {
+    fill: #7789c4;
+    d: path("M509.21,50,670,211.63V910H50V50H509.21M530,0H50A50,50,0,0,0,0,50V910a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50h0V191Z");
+}
+
+.chatlog__attachment-icon > .c {
+    fill: #f4f5fb;
+    d: path("M530,215a25,25,0,0,1-25-25V50a25,25,0,0,1,16.23-23.41L693.41,198.77A25,25,0,0,1,670,215Z");
+}
+
+.chatlog__attachment-icon > .d {
+    fill: #7789c4;
+    d: path("M530,70.71,649.29,190H530V70.71M530,0a50,50,0,0,0-50,50V190a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50Z");
+}
+
+.chatlog__attachment-filesize {
+    color: #72767d;
+    font-size: 12px;
+}
+
+.chatlog__attachment-filename {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.chatlog__embed {
+    display: flex;
+    margin-top: 0.3em;
+    max-width: 520px;
+}
+
+.chatlog__embed-color-pill {
+    flex-shrink: 0;
+    width: 0.25em;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.chatlog__embed-content-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em 0.6em;
+    border: 1px solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.chatlog__embed-content {
+    display: flex;
+    width: 100%;
+}
+
+.chatlog__embed-text {
+    flex: 1;
+}
+
+.chatlog__embed-author {
+    display: flex;
+    margin-bottom: 0.3em;
+    align-items: center;
+}
+
+.chatlog__embed-author-icon {
+    margin-right: 0.5em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.chatlog__embed-author-name {
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-title {
+    margin-bottom: 0.2em;
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-description {
+    font-weight: 500;
+    font-size: 0.85em;
+}
+
+.chatlog__embed-fields {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chatlog__embed-field {
+    flex: 0;
+    min-width: 100%;
+    max-width: 506px;
+    padding-top: 0.6em;
+    font-size: 0.875em;
+}
+
+.chatlog__embed-field--inline {
+    flex: 1;
+    flex-basis: auto;
+    min-width: 150px;
+}
+
+.chatlog__embed-field-name {
+    margin-bottom: 0.2em;
+    font-weight: 600;
+}
+
+.chatlog__embed-field-value {
+    font-weight: 500;
+}
+
+.chatlog__embed-thumbnail {
+    flex: 0;
+    margin-left: 1.2em;
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-image-container {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-image {
+    max-width: 500px;
+    max-height: 400px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-footer {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-footer-icon {
+    margin-right: 0.2em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.chatlog__embed-footer-text {
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+.chatlog__reactions {
+    display: flex;
+}
+
+.chatlog__reaction {
+    display: flex;
+    align-items: center;
+    margin: 0.35em 0.1em 0.1em 0.1em;
+    padding: 0.2em 0.35em;
+    border-radius: 3px;
+}
+
+.chatlog__reaction-count {
+    min-width: 9px;
+    margin-left: 0.35em;
+    font-size: 0.875em;
+}
+
+.chatlog__bot-tag {
+    position: relative;
+    top: -.2em;
+    margin-left: 0.3em;
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    vertical-align: middle;
+    line-height: 1.3;
+    background: #7289da;
+    color: #ffffff;
+    font-size: 0.625em;
+    font-weight: 500;
+}
+
+/* Postamble */
+
+.postamble {
+    margin: 1.4em 0.3em 0.6em 0.3em;
+    padding: 1em;
+    border-top: 1px solid;
+}
+    </style>
+    <style>
+        /* General */
+
+body {
+    background-color: #36393e;
+    color: #dcddde;
+}
+
+a {
+    color: #0096cf;
+}
+
+.spoiler-text {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.spoiler--hidden .spoiler-text {
+    background-color: #202225;
+}
+
+.spoiler--hidden:hover .spoiler-text {
+    background-color: rgba(32, 34, 37, 0.8);
+}
+
+.quote {
+    border-color: #4f545c;
+}
+
+.pre {
+    background-color: #2f3136 !important;
+}
+
+.pre--multiline {
+    border-color: #282b30 !important;
+    color: #b9bbbe !important;
+}
+
+/* === Preamble === */
+
+.preamble__entry {
+    color: #ffffff;
+}
+
+/* Chatlog */
+
+.chatlog__message-group {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.chatlog__reference-symbol {
+    border-color: #4f545c;
+}
+
+.chatlog__reference {
+    color: #b5b6b8;
+}
+
+.chatlog__reference-link {
+    color: #b5b6b8;
+}
+
+.chatlog__reference-link:hover {
+    color: #ffffff;
+}
+
+.chatlog__reference-edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__author-name {
+    color: #ffffff;
+}
+
+.chatlog__timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__message--highlighted {
+    background-color: rgba(114, 137, 218, 0.2) !important;
+}
+
+.chatlog__message--pinned {
+    background-color: rgba(249, 168, 37, 0.05);
+}
+
+.chatlog__attachment-container {
+    background-color: #2f3136;
+    border-color: #292b2f;
+}
+
+.chatlog__edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__embed-color-pill--default {
+    background-color: rgba(79, 84, 92, 1);
+}
+
+.chatlog__embed-content-container {
+    background-color: rgba(46, 48, 54, 0.3);
+    border-color: rgba(46, 48, 54, 0.6);
+}
+
+.chatlog__embed-author-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-author-name-link {
+    color: #ffffff;
+}
+
+.chatlog__embed-title {
+    color: #ffffff;
+}
+
+.chatlog__embed-description {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-field-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-field-value {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-footer {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__reaction {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.chatlog__reaction-count {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Postamble */
+
+.postamble {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.postamble__entry {
+    color: #ffffff;
+}
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(block => hljs.highlightBlock(block));
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler--hidden');
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/a6bf72058896bd5a7feafae436203daa-25C62.png" alt="Guild icon">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">Danganronpa: Prospective Despair</div>
+        <div class="preamble__entry">Dorms (KG) / aiko-maruyama</div>
+
+
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/87cf5b7b42153cef8a4e7ac88b0af174-DDE8A.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Sonic49#7171" data-user-id="229350299909881876" style="color: rgb(67,120,252)">Sonic49 | ???</span>
+
+
+        <span class="chatlog__timestamp">13-Jan-21 08:58 PM</span>
+
+            <div class="chatlog__message chatlog__message--pinned" data-message-id="799095118728134656" id="message-799095118728134656">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Aiko Maruyama, the Ultimate Knitter&#39;s dorm room. In here is mostly what you expect. Of course, there&#39;s the bed, which doesn&#39;t feel too bad, although there are definitely higher quality beds out there. There&#39;s also the desk, which features pencil and papers in its drawers, or, well, something resembling pencil and paper... this is the future, after all, and so it&#39;s probably something that resembles but isn&#39;t quite it. There is a trash can for throwing things away. You can also see a dresser, containing copies of whatever clothes you came in here with.</em>
+
+<em>There is a bathroom in here. It seems to be... also rather basic. Of course, all bathroom amenities have been provided, and yes, a sink, shower, and toilet are in here.</em></span>
+
+                                <span class="chatlog__edited-timestamp" title="13-Jan-21 09:17 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">17-Jan-21 04:08 PM</span>
+
+            <div class="chatlog__message " data-message-id="800471564613058581" id="message-800471564613058581">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Aiko arrived at her dorm, she looked around...
+
+It was not very impressive, but brighter than her room, back at home it was pretty dark aside from the lamp, so maybe a small change of tone was nice, even if it was unusual for her.
+
+And so...</em>
+
+<strong>SLAM!!</strong>
+
+<em>Against the matress.
+
+Snoozy time.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/9d31945ea3ec692ea32629ba91f405fa-43DDB.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Cotten#0222" data-user-id="618903388620587020" style="color: rgb(155,89,182)">Cotten</span>
+
+
+        <span class="chatlog__timestamp">17-Jan-21 04:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="800471848005271610" id="message-800471848005271610">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//I thought she fell on the floor for a second there</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/a_3d4b42371c79c86b0e1a5ea8f1310734-BF7EC.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="staris#0023" data-user-id="493528711161839622" style="color: rgb(155,89,182)">Aiko Maruyama | staris</span>
+
+
+        <span class="chatlog__timestamp">17-Jan-21 04:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="800471885372456971" id="message-800471885372456971">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">// she probably would</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/87cf5b7b42153cef8a4e7ac88b0af174-DDE8A.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Sonic49#7171" data-user-id="229350299909881876" style="color: rgb(67,120,252)">Sonic49 | ???</span>
+
+
+        <span class="chatlog__timestamp">17-Jan-21 04:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="800471911745716245" id="message-800471911745716245">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(it seems like it</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/9d31945ea3ec692ea32629ba91f405fa-43DDB.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Cotten#0222" data-user-id="618903388620587020" style="color: rgb(155,89,182)">Cotten</span>
+
+
+        <span class="chatlog__timestamp">17-Jan-21 04:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="800471979244388383" id="message-800471979244388383">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//Plot twist: The mattress broke</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">17-Jan-21 04:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="800472317465460736" id="message-800472317465460736">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Ugh, this was the worst. For some reason, she just couldn&#39;t fall asleep.</em> <s>Isn&#39;t that convenient huh Derek</s> <em>Well, she wasn&#39;t going to simply sit around in a boring old room with no knitting supplies, so it was best to go somewhere and try doing something. The <span class="mention">#lounge</span> sounded like a decent place, so that&#39;s exactly where she was going to go.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">17-Jan-21 08:35 PM</span>
+
+            <div class="chatlog__message " data-message-id="800538793371107360" id="message-800538793371107360">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Step 1 sleep</em></span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="Mastermindstrueidentity" title="Mastermindstrueidentity" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/786629561777258517-4F98D.png">
+                                <span class="chatlog__reaction-count">1</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/87cf5b7b42153cef8a4e7ac88b0af174-DDE8A.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Sonic49#7171" data-user-id="229350299909881876" style="color: rgb(67,120,252)">Sonic49 | ???</span>
+
+
+        <span class="chatlog__timestamp">17-Jan-21 08:35 PM</span>
+
+            <div class="chatlog__message " data-message-id="800538846940364860" id="message-800538846940364860">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(think she&#39;s been on step 1 for a while</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/a_3d4b42371c79c86b0e1a5ea8f1310734-BF7EC.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="staris#0023" data-user-id="493528711161839622" style="color: rgb(155,89,182)">Aiko Maruyama | staris</span>
+
+
+        <span class="chatlog__timestamp">17-Jan-21 08:36 PM</span>
+
+            <div class="chatlog__message " data-message-id="800538987352555550" id="message-800538987352555550">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">// yeah...</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">17-Jan-21 09:44 PM</span>
+
+            <div class="chatlog__message " data-message-id="800556148242776084" id="message-800556148242776084">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>She is dreaming about massive pancakes turning into drywall.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="Mastermindstrueidentity" title="Mastermindstrueidentity" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/786629561777258517-4F98D.png">
+                                <span class="chatlog__reaction-count">1</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">19-Jan-21 01:43 PM</span>
+
+            <div class="chatlog__message " data-message-id="801159907994894376" id="message-801159907994894376">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Eh, she&#39;s going to the food court because she is OBVIOUSLY hungry. Why else do people go to the food court? This isn&#39;t foodland where food gets tried in trials. This is a Danganronpa.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="Mastermindstrueidentity" title="Mastermindstrueidentity" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/786629561777258517-4F98D.png">
+                                <span class="chatlog__reaction-count">1</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">19-Jan-21 03:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="801187808265240638" id="message-801187808265240638">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Step 2 sleep</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">21-Jan-21 09:07 AM</span>
+
+            <div class="chatlog__message " data-message-id="801815345584275487" id="message-801815345584275487">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Aiko woke up, as she unusually does considering her everyday routine, there wasn&#39;t really much to do for her. She had no ideas for fancy meals to summon, the TV in the rec room was broken, and there were no knitting supplies she could find. It was safe to say that her stay during this killing game was painfully boring, maybe even that is an understatement.
+
+But there had to be something around here, right? There were multiple people in this odd skyscraper with her, and they had to find some entertainment somewhere, and for that exact reason Aiko decided she will once again, heroically attempt to explore this skyscraper to find something, ANYTHING to do.</em>
+
+&quot;Come on, Natsu. We need to find some... uh... I&#39;ll even take a toy at this point, honestly.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">21-Jan-21 12:48 PM</span>
+
+            <div class="chatlog__message " data-message-id="801870736931029052" id="message-801870736931029052">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Step 3 sleep</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">21-Jan-21 04:00 PM</span>
+
+            <div class="chatlog__message " data-message-id="801919147926749194" id="message-801919147926749194">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Aiko wakes up. PAIN PAIN PAIN.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">21-Jan-21 04:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="801923265588101191" id="message-801923265588101191">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Cannot sleep, this is horrible.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">22-Jan-21 06:07 AM</span>
+
+            <div class="chatlog__message " data-message-id="802132297167405068" id="message-802132297167405068">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>It was a painful day for Aiko, she did manage to make a friend but... she couldn&#39;t sleep. Nobody could sleep because of this weird thing Blake injected into everybody. It is obvious that everybody would be irritated by something like that, but Aiko felt particularly angry, a bit furious even considering how she was constantly drowsy, and now she couldn&#39;t even doze off and lay somewhere as much as she tried.
+
+Initially, she planned to simply stay in her dorm the whole time, but the boredom of having absolutely not a single thing to do and not a single visitor was really starting to dig into her, so she decided maybe she could raise her mood over a meal, then quickly come back to the dorm to save energy.
+
+And so, she headed out to the food court.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">22-Jan-21 12:37 PM</span>
+
+            <div class="chatlog__message " data-message-id="802230443751112800" id="message-802230443751112800">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Aiko entered her dorm, sighing and laying herself down on the bed. It was... a tough few hours, a few hours that really made her think about everything. How she grew up, who she was. It probably wasn&#39;t the best for it to happen when everybody was half-dead from whatever Blake injected into them, but that didn&#39;t matter.
+
+Normally, Aiko would sleep or knit something, but with no other choices, she simply laid down on her bed with her cat and thought. Thought about what she will do tomorrow.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">23-Jan-21 04:01 PM</span>
+
+            <div class="chatlog__message " data-message-id="802644172392628236" id="message-802644172392628236">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Aiko got up from her bed, she still hasn&#39;t slept, what a pain...</em>
+
+&quot;Let&#39;s... <em>Yaaaaawn.</em> go... Natsu...&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="802645334895099944" id="message-802645334895099944">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>She DID manage to sleep actually.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">24-Jan-21 03:50 PM</span>
+
+            <div class="chatlog__message " data-message-id="803003872096026704" id="message-803003872096026704">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Aiko entered her room, she wanted to sleep as usual but... the thought of what happened to Kyo was enough to keep her up. She simply laid down in the bed, hoping anybody knows anything about the new floor.</em>
+
+&quot;I&#39;m sorry I... didn&#39;t cover your eyes, Natsu... I&#39;m very sorry...&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">24-Jan-21 04:22 PM</span>
+
+            <div class="chatlog__message " data-message-id="803011763414630463" id="message-803011763414630463">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Once Kataoka had entered the room, Aiko closed the door and sat herself down on the floor, placing her cat next to her. Of course, she lied earlier about feeling fine from the execution, on the inside she was absolutely trembling just from the mere thought of what could have happened to Kyo.</em>
+
+&quot;Uhh, y-you can sit on the bed, if you want! I want to be a good host and everything so... I-I arranged everything for you beforehand and everything and... it&#39;s a bit messy because you came early but... just come and sit, I promise I didn&#39;t cry into the pillow!&quot;
+
+<em>That, of course was also a lie, one side of the pillow was completely soaked with her tears, and the bed was nowhere near arranged. She really just wanted to please him and look like a good friend.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">24-Jan-21 04:33 PM</span>
+
+            <div class="chatlog__message " data-message-id="803014539427708958" id="message-803014539427708958">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">He took one glance at the room and the meaning of her words began to unfurl, especially when she says things like that outright. He walked over to her bed, pulling on the sheets and tidying it up for her. He allowed his actions to be seen from where she was sitting so that she can get a proper look at what he was doing. Once everything was no longer in disarray, he looked back at Aiko. &quot;And that&#39;s how you properly tidy up your bed.&quot; He smiled at her as he said so. Perhaps he was showing this so that she could do it properly next time. Of course, he didn&#39;t mistake her for a child or anything but he still felt the need to show it to her. Once he was done, he sat on the edge of her bed, patting the spot to his side as if gesturing her to sit next to him. If that wasn&#39;t apparent enough, he even said it, &quot;Cmere. Im happy that you worked so hard for this but you don&#39;t have to go so far, alright? We&#39;re friends, after all~!&quot;
+
+&quot;So, you don&#39;t have to treat me like a one-time VVIP guest. Just be yoursel, okay?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">24-Jan-21 04:38 PM</span>
+
+            <div class="chatlog__message " data-message-id="803015874067824680" id="message-803015874067824680">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Of course, the room wasn&#39;t much different from Kataoka&#39;s, aside from the clothes that could be found in the wardrobe so there wasn&#39;t exactly anything to look for, unless Blake hid something in here. She watched him tidy up the bed with a blushing and flustered face, almost embarrassed that he was doing this type of thing for her, she did know how to do it properly, the room she was locked in for most of her life did have a bed in it.</em>
+
+&quot;H-Hey, you don&#39;t have to teach me how to do that! I&#39;ve made my bed countless times, it&#39;s not like that&#39;s anything difficult, I was just in a rush, that&#39;s all! Jeez... you&#39;re so... you&#39;re kind of like my parents, in... a weird kind of way...&quot;
+
+<em>She was initially reluctant to sit down next to him, it felt rude to take a seat with your guest like that, but it also felt rude to just ignore his request as a host, so she got herself up and sat down on the bed, trying to keep as much space between them for his comfort.</em>
+
+&quot;I-I am myself! I just... well... you&#39;re my friend and... I want you to feel at home in my dorm, I give lots of care to Natsuzuki too.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">24-Jan-21 04:53 PM</span>
+
+            <div class="chatlog__message " data-message-id="803019796676345866" id="message-803019796676345866">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Ahaha, sorry if I remind you of them. Im just looking out for you, is all. Who knows, you might not have known how to tidy up a bed&quot; That one cheeky smile he uses gives her when hes teasing her was in full view once again, a slight giggle coming afterwards. He noticed that she had shuffled away from him when she sat down. Kataoka was slightly confused as to why that was but he just lets it slide, no reason to call her out on that after all.
+
+&quot;Yeah, I understand. If thats how you want to go about treating your friends, then Ill respect it. Its very kind of you as well.&quot; <em>Right, I did say she could make herself at home when she first came to my room. Perhaps she&#39;s just extending the same level of hospitality...</em>
+
+Once he got a closer look at her face, he noticed a detail he might&#39;ve overlooked. Her cheeks were a bit glossy, as if stained with tears and her eyes looked slightly wet. &quot;Hey, your eyes are a bit damp.&quot; He drew his hand back into his sleeve and brought it over to her face, wiping her leftover tears away.
+
+&quot;There we go. Are you sure you weren&#39;t bawling your eyes out while I wasn&#39;t looking?&quot; He said, wearing a concerned look on his face.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">24-Jan-21 05:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="803022033948246036" id="message-803022033948246036">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;You don&#39;t have to apologize for it, it&#39;s not like I hate my parents, even if they lock me in a room they&#39;re still nice and everything... y-you don&#39;t hate my parents, right? Maybe you could meet them when we get out of here... that would be nice. Maybe you could convince them to let me go outside!&quot;
+
+<em>Aiko&#39;s face slowly began to form a smile as she looked at her cat, who was still laying down on the floor. Even though she was much more open around him, she seemed to be more open the further she was from the cat too, whatever that was supposed to imply.</em>
+
+<em>She tried to pull away when he wiped her tears, but she didn&#39;t really have anywhere to go except off the bed and towards him, so she simply had to accept it and hope he wouldn&#39;t point out that she was crying, which he of course did, which made her look down and sigh.</em>
+
+&quot;I-I wasn&#39;t! I would... n-nevery cry, it was... Natsuzuki had to watch the punishment and... he was-&quot; <em>She sighed again, starting to tug on her sleeves.</em> &quot;I did... I cried into my sweater and the pillow... I lied to you, I-I&#39;m sorry. You&#39;re not mad, right? W-We&#39;re still friends?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">24-Jan-21 05:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="803034579707494421" id="message-803034579707494421">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Well, I can&#39;t say I hate them... Nor can I say I appreciate what they did to you, so lets just say Im neutral!&quot; While he was telling this, his view on them on the inside differed greatly. He didn&#39;t like how her parents were to her, robbing her of her free will and all but he didn&#39;t want to say it aloud, at least not right now. &quot;I think I can give them a few reasons to try and get you out, that&#39;d be a nice change of pace, right? Well, not like you&#39;re not outside right now but-- y&#39;know what I mean..&quot;
+
+&quot;I appreciate you telling me the truth and its fine even if you lied to me to get there.&quot; He plopped his hand onto her head once again, giving her a little pat. &quot;And of course, Im not mad. All I need from you is the honest truth and you did just that.&quot; He tried to encourage her, reassuring her that she did a fine job for doing so.
+
+&quot;I don&#39;t know the exact reason you cried but its still fine to cry, no? So, there&#39;s really no need to hide it.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="803034710178660362" id="message-803034710178660362">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(im just getting this in cause i got school in a bit so ill see ya <img class="emoji " alt="👀" title="👀" src="https://twemoji.maxcdn.com/2/72x72/1f440.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/a_3d4b42371c79c86b0e1a5ea8f1310734-BF7EC.gif" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="staris#0023" data-user-id="493528711161839622" style="color: rgb(155,89,182)">Aiko Maruyama | staris</span>
+
+
+        <span class="chatlog__timestamp">24-Jan-21 05:56 PM</span>
+
+            <div class="chatlog__message " data-message-id="803035457788837898" id="message-803035457788837898">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">// npnp</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">24-Jan-21 06:04 PM</span>
+
+            <div class="chatlog__message " data-message-id="803037606228131860" id="message-803037606228131860">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;That&#39;s good, it&#39;s...not good to hate someone&#39;s parents. I think... but you really shouldn&#39;t hate them! I know I only said bad things about them but, they really are very nice and everything! Really!&quot;
+
+ <em>Aiko sounded almost desperate, as if she was trying to convince him her parents were not as he thought at all costs. It really sounded like she knew how he really felt, even though she didn&#39;t.</em>
+
+&quot;I-It&#39;s fine? You aren&#39;t... mad? I always thought people got super mad when someone lied, I know girls do that a lot on those TV shows! I mean... you&#39;re not a girl and... this isn&#39;t TV or anything but... l-look, you get me, right? N-Not that you have to, I just... uh...&quot;
+
+<em>She kept tripping over her words, constantly bringing up examples and excuses, only turning quiet after he pat her head, which calmed her down.</em>
+
+&quot;I cried because... I was scared of the punishment. I know that Kyo killed someone and all but... his screams were scary. And the fact that it wasn&#39;t TV but real life was... it hurt.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">25-Jan-21 02:03 AM</span>
+
+            <div class="chatlog__message " data-message-id="803158084553932820" id="message-803158084553932820">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Seeing her constantly having to find her ground and adjust to the conversation was rather interesting for him. It was like her trying to gain her own views while still juggling the things she&#39;s learnt throughout her life as reference. Well, this was what he had hoped for and though they&#39;re just dramatic and overly exaggerated, its still a good place to start, better than having no idea hoe people work.
+
+All he had to do now was just fine-tune it, occasionally just letting her figure it out on her own and be there to support her in case she needs help. Such as this instance, &quot;Well, thats just typical drama. They tend to abuse tropes and certain traits to make the drama more enjoyable, or as dumb people would call it, &#39;realistic&#39;.&quot; He seemed to have a bit of a pet peeve with this subject since its clear in his tone and delivery. &quot;Theres lots of lies that people use. Most are more blatant, others are just very manipulative and often twists the truth. There&#39;s also big and small, subtle and apparent, so on and so forth.&quot;
+
+<em>Her too, huh.. Im not used to it either, especially not one in that fashion.</em> He tried to push it down because hearing her say that was exactly why he came in the first place. &quot;Now you know. We can never know who this might happen to or even when it might happen. People tend to break in times of desperation and this time, it was Kyo. It was scary for me as well. Even for other people too. But I guess you could say that&#39;s normal. Its normal to be afraid like that.&quot; He tried to sympathize with her.
+
+&quot;We tend to think &#39;what if that was me&#39; whenever we witness something like that but I believe that so long as we have the willpower and a drive to keep moving forward, I think we&#39;ll do just fine.&quot; He ended it on a light note to cheer her up and make her think positivelt even after that.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">25-Jan-21 02:45 AM</span>
+
+            <div class="chatlog__message " data-message-id="803168596729135115" id="message-803168596729135115">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;D-Drama? But... I thought people on TV act real, I mean... I know that they are all actors and everything and that the characters aren&#39;t real but... they don&#39;t have to act like people actually would? I&#39;m really going to have to learn more about people... n-not that I don&#39;t know or anything! I have you and my parents, right?&quot;
+
+<em>It was noticably hard for her to speak, even if it was just a sign of her opening up and thinking of herself, she was much more calm and comfortable whenever she had played her emotionless act, apparently this is what Aiko actually was behind her mask, but she will probably become more comfortable with acting more like herself around Kataoka, not around others though, not yet. She doesn&#39;t know the others.</em>
+
+&quot;Yeah, I know that we couldn&#39;t sleep and that we had to kill and all but... Devon wasn&#39;t killed brutally, right? He was just hit with a stick and that&#39;s that! But... well, I don&#39;t know what happened to Kyo because I covered my eyes but... I heard all the screams and machine sounds and everything and... I think I&#39;m gonna be sick just thinking about it...&quot;
+
+<em>Her face turned pale as she leaned against the wall, the thought of thinking about what could have happened to Kyo actually did made her sick.</em>
+
+&quot;I don&#39;t want to think about it being me... n-not that I would ever kill someone, I&#39;m too weak and scared to do that so even if I wanted I couldn&#39;t. But... I know you said that the real world is full of pain and I should get used to it, it&#39;s... it&#39;s not full of pain like that, right? I won&#39;t... end up the same as Kyo in the outside if I do something bad...&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">25-Jan-21 05:44 AM</span>
+
+            <div class="chatlog__message " data-message-id="803213677556924437" id="message-803213677556924437">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Well, of course they&#39;re trying to &#39;act&#39; as feasible as possible. The characters they portray are still meant to be people after all. But if it was just the every day life, without stimulus and without anything happening, would anyone still be watching? Hence why, they add &#39;enticing&#39; events and characters that orchestrate that to spice up the story. A slice of life is but a portrayal of real life but in reality, most of us dont lead that sort of lifestyle on the regular. We all walk different paths in life and its not without its trials and tribulations. But unlike the people on TV, it doesn&#39;t happen all at once in an episodic format. We realize them later in our lives and some of them might even be resolved rather easily too. Its just, mundane.&quot; You could really hear the quotation marks when he makes them and he&#39;s rambled on this particular point the longest and he still has something to say.
+
+&quot;You Ultimates are more...different. Your own individual lives can all be feasibly made into their own dramas or just stories in general.&quot;
+
+He then listened on about her still relying on either him or her parents but... Natsuzuki was missing from the picture? She often brings up Natsuzuki when it comes to these kinds of things so it was odd to see her not doing so. Regardless, that one theme is still prevalent in her being. 
+
+&#39;Dependency.&#39;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="803213762369683467" id="message-803213762369683467">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">.
+.
+.
+She seems to like relying on others a lot and depending on them. He gets that in a way, wanting to have a second opinion or wanting someone to reaffirm your way of thinking. Though, some eventually are capable of their own thoughts without looking to infer to people too often and he wishes for her to be able to do so as well in the future. Because who knows? He might be taken away too soon before she could do it herself and her parents might no longer be residents of this world. If that were to happen, who does she go to..? Just thinking about it that way breaks his heart and he prays that she doesn&#39;t have to go through such a painful thing. This also mean&#39;t that she had to be friends with those around her as well because if its just him helping her then he&#39;s not too different from her parents. He&#39;d prefer it if the vibrant personalities of people here to rub off of her and help her grow without relying on him all too much. Alas, thats an idea for later. Whether she attempts to do so or not, he will see.
+
+When he heard her describing Devona death, all he could do was wear a frown. &quot;I think its better if you don&#39;t know what happened to Kyo. He&#39;s..&quot; He left it midsentence, unwilling to continue it.
+
+&quot;Im not trying to say you will, but everyone here has a good chance of becoming either the hunter or the hunted. So we have to be careful where we plant our feet.&quot; He clarified, to iron out any wrinkles his previous statement had.
+
+&quot;Well, this is quite the unusual situation we find ourselves in. So, everyday life would not be that bad. In fact, you could say this is one of its heights. A peak that rarely anyone comes across. But at the same time, you can still experience the various pains of life here as well when we spend time with the people here. You&#39;ll see what I mean.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">25-Jan-21 07:29 AM</span>
+
+            <div class="chatlog__message " data-message-id="803240108111036456" id="message-803240108111036456">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Well, yeah, I know that it&#39;s not real, my parents told me about that everything. But... have you ever thought if... people are real? You know, what if... we&#39;re all actors in our own TV shows? That&#39;s what some people feel like sometimes, we sometimes have guests over at our house but I never got to see them, I only hear them talking with my parents. It&#39;s just weird to meet everybody else I guess, but at least... a-at least people aren&#39;t as bad as I was told. I mean... we did have a murderer among us and everything but... it wasn&#39;t you or Derek so that&#39;s good! It&#39;s good to know that I&#39;m making the right friends, and it makes Natsuzuki happy too.&quot;
+
+<em>Aiko tilted her head in confusion at one of the statements, Ultimate. Yes, she was one and she did acknowledge it, but she wasn&#39;t really able to know what a regular person was like, even if her parents could be considered like that.</em>
+
+&quot;I don&#39;t really want to be a story, to be honest... I just want to be with Natsuzuki, my mom and dad, and, well, with you since recently. That&#39;s why most of my customers don&#39;t actually know me... they just know me by my talent, but not my name. How would you feel if you were an Ultimate, Kataoka? Would you rub it in people&#39;s faces or would you just... be quiet about it, I guess. You have to be an Ultimate, right? If we all are, then I don&#39;t think Blake would have gathered all of us and a random person for no reason. N-Not that you are a r-random person...&quot;
+
+<em>Aiko went over to her cat and picked him up before coming back to the bed, setting him in the middle, between the two of them. She looked the cat in the eyes and pat him before looking back at Kataoka.</em>
+
+&quot;You two should... try to become friends someday. Natsuzuki is very nice and... he&#39;s a bit more open-minded than me, j-just don&#39;t be a better friend than me for him, okay? I... I don&#39;t want to lose him, he&#39;s very, very important to me. He can help me get through any pain, because... that&#39;s what best friends are for, right?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">25-Jan-21 07:56 AM</span>
+
+            <div class="chatlog__message " data-message-id="803246963197214760" id="message-803246963197214760">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Christ, what is this?? I looked away for two seconds and she&#39;s already talking about the simulation theory?? Shes growing up so fast.</em> He felt like his heart squeezed just looking at this, definitely feeling like a parent of some sort proud of their childs accomplishments.
+
+That aside hearing her talk about her situation at home was almost quite sad to hear. <em>She was like a ghost, huh... I could say the same for myself too.</em> He thought to himself before answering her question. &quot;I&#39;d definitely rub it in your face and everyone&#39;s faces so that I can say, &#39;Im not a normal person, but an Ultimate&#39; &quot; He extended his hand, shaking it and gesturing it as he described, sticking his tongue out a little as he did so. &quot;Well, for one thing, I don&#39;t know how Id react if I am actually talented at something. Ive been such a normal guy all my life and suddenly, Im handed that sort of title. Perhaps I <em>would</em> stay quiet about it. Or perhaps, Ill just act indifferent. Thats a choice too.&quot; Yeah, perhaps he was an Ultimate Something but at this point he&#39;s so used to the way he&#39;s lived his life its better if he just didnt bother with it.
+
+He looked at Natsuzuki, befalling him with sorrowful eyes. <em>I wonder what kind of role he serves for her. Perhaps a coping mechanism. Maybe even her inside voice, one that she&#39;s reluctant to let out because of her situation so she uses a different substance to act as exactly that. Whatever it is, she might have to leave it soon.</em> The look didnt last very long and very quickly he reverted back to a smile. &quot;I thought we were already friends~, right Mr. Natsuzuki??&quot; He pointed it out proudly.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">25-Jan-21 08:12 AM</span>
+
+            <div class="chatlog__message " data-message-id="803250922217537546" id="message-803250922217537546">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Well, you have to be some sort of Ultimate if you&#39;re here. Maybe... it&#39;s not a very big talent, like mine. Knitting isn&#39;t really something people are into a lot, I-I think... Usually on TV it&#39;s mostly just old ladies who do that kind of stuff, so it&#39;s not like my talent is very special. But even if your talent is something small, it&#39;s... still a talent, right? Even if it&#39;s something like marathon TV watching or pouring water into a glass... those are pretty... d-dumb, aren&#39;t they?&quot;
+
+<em>She looked down with a slight giggle, looks like even a sheltered girl like her was able to laugh at her own irony and poor jokes. Her head was slowly turning all over the place at this point, thinking about where she would be right now if they hadn&#39;t met at the cinema, while trying to focus on the conversation at hand. Some inner voices were still telling her that just sitting in her bubble would be a better fate, a less painful one, and as tempting as those voices were, she was able to resist them... for now.</em>
+
+<em>Aiko looked over at her cat once he asked the question, just as always, it simply stood there, the cat wasn&#39;t secretly alive or infused with some magical energy, it was as normal as any stuffed toy, aside from the fact that it looked a lot older and rugged compared to anything you&#39;d find at a toy store.</em>
+
+&quot;N-Natsuzuki says yes, but... h-he also says he likes me better still. So... h-he wants to sit with me right now.&quot; <em>She stuttered, almost possessively pulling the cat to her side, she couldn&#39;t let him go even for a friend.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">25-Jan-21 08:40 AM</span>
+
+            <div class="chatlog__message " data-message-id="803258035660521482" id="message-803258035660521482">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">She got a little chuckle out of him for her joke. Though, what she said was kind of true. It may not be grand or impressive but its still a talent and a title that he&#39;s earned, whatever it is anyways. Though, he prefers to stay indifferent towards whatever potential talent he might have, he still very much appreciates her attempts of cheering him up. Maybe, soon enough, people would be able to rely on her more. Ah yes, hopes for the future. &quot;Thanks, Aiko, thats very kind of you to say.&quot;
+
+Even if its not the way he sees it, he still hopes that she can mold her own person with the experiences she&#39;s gained here. To be frank, it could be said that being here was both a blessing and a curse of sorts for her. Sure, its unfortunate that she has to go through all of this but it also allowed her to mature on her own. Though, he  worries that all that effort she would cull might prove meaningless if they ever return to their normal lives. After all, her parents still have a firm grip around her and there&#39;s no telling if she would be able to defy them when the time comes. Alas, he could only pray and hope for the best as now was the time to nurture their friendship.
+
+&quot;Well, Natsuzuki can have <em>two</em> best friends, y&#39;know~? And it applies to people to. The term best friend is a bit butchered from its original meaning, considering some people just have lots of best friends but I, for one, don&#39;t mind it. Its rather convenient.&quot; Well, a convenient way to not make people feel left out that is.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">25-Jan-21 08:51 AM</span>
+
+            <div class="chatlog__message " data-message-id="803260784338927616" id="message-803260784338927616">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Aiko was glad to know she could make him chuckle, and returned a smile to him again. She wasn&#39;t really good at showing it before, and she probably still keeps a lot of emotions bottled up, but she really enjoyed and appreciated his presence, regardless of any regrets or fears that might have mounted themselves.</em>
+
+&quot;I-Is it? I... I just say what I think... that&#39;s all, is speaking your mind like that... kind? I never knew, I&#39;m gonna have to write that down as a note somewhere.&quot;
+
+<em>Even if her parents might not accept Aiko getting more independent, she was definitely going to try her best to exert her free will more. She got to learn that she is a person and that she cannot simply be caged up all her life and hope that nothing bad will come to her, she&#39;s somewhat ready to face the pain and hardships of the real world, though it&#39;s hard to say if she will crawl back into her comfort zone if it ever becomes too much for her. Only time will truly tell after this killing game is over.</em>
+
+&quot;N-No he can&#39;t! He&#39;s my best friend!&quot; <em>Aiko shouted almost aggressively, before looking down and slowly shoving the cat towards the middle again.</em> &quot;I-I&#39;m sorry... I... I didn&#39;t mean to raise my voice, I&#39;m sorry. Please don&#39;t be mad! I... Natsuzuki doesn&#39;t like having many friends, he... can easily get overwhelmed...&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">25-Jan-21 09:08 AM</span>
+
+            <div class="chatlog__message " data-message-id="803265127654227988" id="message-803265127654227988">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">He was startled when she raised her voice but there was a brief, awkward pause before he decided to capitalize on it. &quot;Wow, I cant believe you shouted at me like that, makes my heart ache a little, yknow~&quot; He tried to play up this particular moment both with a mix of dramatics and authenticity. It was clear that it was obviously more of the former but he wanted to see how she would react. Eventually, once he got his fill, he said the magic word; &quot;Of course, Im only joking~. I understand how you feel, to an extent and I know how much you want to keep Mr. Natsuzuki all to yourself~&quot; He teased her a bit as he would normally. He was kind of glad that she was very open to jokes and teasing. Otherwise, conversations would&#39;ve been rather dull.
+
+Now, back to her original question. &quot;Well, being blunt and speaking ones mind is a confusing can of worms. Some people tend to deem that saying too much of your mind is bad because you might come across as someone who holds no regard for other people&#39;s feelings. And so, Ms. Aiko, what should one do in this situation to avoid such a thing happen?&quot; He directed the question to her as if she was a random student that got the finger and had to answer the teachers question. He wanted to see how she would face that kind of situation before giving his own thoughts on dealing it.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">25-Jan-21 09:14 AM</span>
+
+            <div class="chatlog__message " data-message-id="803266474286383164" id="message-803266474286383164">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Aiko was ready to start apologizing again when he began to tease her, only for her to calm down once he mentioned he was joking, she was more than open to jokes, but clearly she didn&#39;t want to feel like she was hurting him.</em>
+
+&quot;D-Don&#39;t make it sound like I&#39;m forcing him to stay with me, h-he could be with anybody if he wanted to, he just... doesn&#39;t. I&#39;m only keeping him around so much because he&#39;s scared to be all by himself, he always told me stories of how scary it was to be at the store surrounded by toys that weren&#39;t like him. And... I don&#39;t want to make him feel like that, I want Natsuzuki to always be with me, and he wants that too.&quot;
+
+<em>She continued to look at both of them, it was... mildly uncomfortable for her to have someone so close to Natsuzuki without her holding him, but she also listened to whatever Kataoka had to say, it&#39;s bad to come out as disrespectful after all.</em>
+
+&quot;H-Huuh? No regards for... b-but isn&#39;t that what bad people do? If... i-if I come across someone bad I... I never came across a bad person, I only ever knew my parents... do I g-go find somebody to talk to? That&#39;s... what people do, yes? If they feel bad or uncomfortable they talk to a friend until they feel better!&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">25-Jan-21 09:28 AM</span>
+
+            <div class="chatlog__message " data-message-id="803270127750479923" id="message-803270127750479923">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">He had a prolonged &#39;ehh&#39; coming out of his mouth before he said, &quot;Close enough. Good effort!&quot; To be completely honest, he had no idea what she was referring to but he figured that he should compliment her for it even if it wasn&#39;t what he was looking for. Afterwards, he tapped the bridge of his nose as if he was pushing up a pair of non-existent glasses. &quot;The answer is, we have to read the situation and the people around us and figure out if its appropriate or not. Usually, you can tell by just being in a place full of people, what kind of &#39;atmosphere&#39; or ambirnce is present in a room and you can read how people feel at a given time by reading their expression or body language or perhaps even a gut feeling or your instincts. After that, you deem whether or not your piece of mind is suitable for this situation or not.&quot; It might have sounded like word garble to her but he still gave that long-winded explanation without stumbling.
+
+&quot;It sounds really hard but once you get used to people around you, you can pull that off pretty easily.&quot; He added.
+
+&quot;I see I see. Do you feel a spiritual connection with him? And what do you mean different? Oh, and didn&#39;t you call him a cat before? You were really insistent on that difference so I thought Id point it out.&quot; He basically bombarded her with questions regarding her and Natsuzuki.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">25-Jan-21 09:33 AM</span>
+
+            <div class="chatlog__message " data-message-id="803271356807381002" id="message-803271356807381002">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Aiko listened to his lecture, she was happy with her answer being good enough but she had no idea how to do anything he had just explained, reading rooms, atmospheres? Even with her parents around she wasn&#39;t really able to tell their feelings, it&#39;s not easy when you lack proper human interaction, even with your own parents considering that they keep you locked in your room for most of the week.</em>
+
+&quot;I-I&#39;ll try my best to... learn to do that! I promise that I&#39;ll be better and I&#39;ll learn how to talk to people! And then... w-we could hang out with all the others once we get out of here! Because... we will get out of here. Will we? T-This game has to end someday, right?&quot;
+
+<em>She started sliding in Kataoka and Natsuzuki&#39;s direction, pulling him in close before she heard him ask about the cat.</em>
+
+&quot;H-Huuh? Spiritual connection? I... N-No... I don&#39;t. He is a cat but... he&#39;s special, you know? He can talk to me, but only I can understand him. Back then I could only hear him when mom and dad said his words, but eventually I also learned to hear him and talk to him. He&#39;s like... magical! And that&#39;s why I love him. He&#39;s my own magical friend who loves me~&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">25-Jan-21 09:45 AM</span>
+
+            <div class="chatlog__message " data-message-id="803274248659402814" id="message-803274248659402814">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">He looked at her not having the faintest idea of how to do any of that but he was glad that she listened at least. He was well-aware that shr can&#39;t accomplish such a thing overnight but he will be looking forward to it. 
+
+&quot;That sounds like a wonderful idea.&quot; He smiled at her suggestion. &quot;And yes, I think there will be an end to this killing nonsense. When is a bit blurry but the fact of the matter is that it will end.&quot; <em>And I look forward to see it ending with everyone here.</em> He thought to himself.
+
+Back to Natsuzuki, &quot;Thats kind of what I was talking about. You feel some sort of connection with him, no? You could alternatively think of it as &#39;love at first sight&#39; too.&quot; When she added that comment about her parents, he was taken aback for a few moments but it wasn&#39;t visible for Aiko to see. <em>Perhaps I read that wrong as well. Maybe its not her subconscious but maybe...</em> He left it hanging, letting the thought marinate now would hinder their conversation, so it was kept for later.
+
+&quot;Did your parents bought him for you? And do you think there are others like him?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">25-Jan-21 09:54 AM</span>
+
+            <div class="chatlog__message " data-message-id="803276496567402536" id="message-803276496567402536">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Aiko started to smile more at the though of everybody getting out of this skyscraper alive, even if they would never meet again, just Kataoka hanging out with her is fine. Of course, the poor girl sadly didn&#39;t know that another murder would take place, and another, and another, and so on until the killing game finally ends, but she isn&#39;t too concerned with that right now, surely nobody else could die since the whole sleeping thing is gone!</em>
+
+&quot;Well... I don&#39;t know if it&#39;s really a connection, maybe... my parents stopped understanding him once I finally was able to hear him, only sometimes were they able to really speak with his voice. But I heard him say different things so it was... a bit weird, maybe he says different things to them?&quot; <em>Aiko looked at the cat and placed a finger on her chin, she was... confused. As if the cat didn&#39;t seem to talk to her this time, but it wasn&#39;t something that never happened.</em>
+
+&quot;Yeah, my mom bought him for me. She told me she saw a pretty cat at a store and decided it&#39;s time for me to have a toy for once. My parents always say that toys today are just too flashy and meant to addict kids, so I didn&#39;t really have much to play with before.&quot;
+
+<em>Others like him? Can other toys talk?</em> &quot;Hm... maybe, I never really had anything else, and I never played with anybody else&#39;s toys, so perhaps... perhaps other people&#39;s stuff can talk to them too. You had toys as a kid, right? Did you ever talk to them or have your parents speak with their voice to you?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">25-Jan-21 10:06 AM</span>
+
+            <div class="chatlog__message " data-message-id="803279638876127252" id="message-803279638876127252">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Was there anything different with how he talked when your parents voiced him and now ot are they the same?&quot; He was curious to see where this was headed and to see if Natsuzuki&#39;s voice had any correlation to her parents at all.
+
+Hearing her describe how her parents thought of toys nowadays made him picture them as &#39;those&#39; kinds of parents. They definitely have a lot of negative opinions about the world, particularly people. They seemed traditional in a way, which led him to think what kind of household was she living in exactly. Questions for later.
+
+&quot;Well, I used to talk to mine a lot when I was a kid but they didn&#39;t say anything back, nor did my parents do that for me. So, I kinda just grew out of it when i got a bit older since I made lots of friends my age in my neighbourhood.&quot; Just looking back on it made him feel a bit of nostalgia and.. A bit sadness as well. He had that nostalgic smile on his face, with crinkles of sadness somewhat apparent on his face as well.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">25-Jan-21 10:12 AM</span>
+
+            <div class="chatlog__message " data-message-id="803281074046107658" id="message-803281074046107658">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Natsu&#39;s voice is the same as what my parents did, it&#39;s just that he always said different things than what I heard him say. They weren&#39;t really very different most of the time, sometimes it was just wording, but... he still sounded different. I wonder if he was always saying something my parents didn&#39;t want me to hear. They didn&#39;t want me going outside and they don&#39;t really like a lot of things but... t-they wouldn&#39;t keep away Natsuzuki from me like that, right? He&#39;s my best friend and they know that. They&#39;re happy that I have somebody.&quot;
+
+<em>Aiko frowned a bit after hearing about his sad story with toys, she got a bit closer to him and pat him on the back.</em>
+
+&quot;Awww, it&#39;s okay. When we get out of here, I promise I&#39;ll sell some nice sweaters and buy you some nice toys with the money, ones that can talk too! Well... it&#39;ll be up to you to find out if you can hear them, I guess...&quot; <em>She sounded like an absolute child right now.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">25-Jan-21 10:31 AM</span>
+
+            <div class="chatlog__message " data-message-id="803285964654641152" id="message-803285964654641152">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>It gets twisty by the minute huh...Well, I can sort it out on my own later.</em> &quot;Perhaps they do recognize the value you hold towards Natsuzuki but I may never know, not until I meet your parents, of course.&quot; He gave his thoughts on the matter.
+
+He was a bit surprised when she pat him in the back, which made him realize what face he was making and he immediately tried to cover it up. &quot;W-Well, we wouldn&#39;t want Natsuzuki asking you who the toy is for, right? He might see you as unfaithful~&quot; He jests, more of his teasing innuendos. He didn&#39;t mind that she sounded like a child because again, it seemed like it was her idea of cheering people up. &quot;Nothing can beat Natsuzuki though, so I think I&#39;ll just stick to him for now. Having one talking toy is already plenty.&quot; He then leaned back with his hands holding him up. He pondered over what time it was since he lost track after talking for so long with Aiko. Perhaps now was a good note to end it on.
+
+He sat back up a few moments later, his head turning towards Aiko. &quot;I think Ill head off for now, its been good talking to you!&quot; He awaited for a response before he got up.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">25-Jan-21 10:36 AM</span>
+
+            <div class="chatlog__message " data-message-id="803287279291596862" id="message-803287279291596862">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;You should totally meet them, I think... even though you don&#39;t agree with them, you would still be able to get along with them. My mom makes really nice food and everything.&quot;
+
+<em>She was somewhat struck by his joke again, obviously she had all of her faith placed in Natsuzuki and his love for her, but she wasn&#39;t a fan of the thought that he might abandon or dislike her someday, even if it was presented as a joke. At this point though, Aiko was able to understand that it was serious and could pull off a smile behind a worried face.</em> 
+
+&quot;Y-Yeah... but you can&#39;t hear him, can you? Everybody should have their own talking toy, it&#39;s like a friend you have with you whenever you need them! And one that you can hug, and carry, you could even kiss your toys if you&#39;re <strong>that</strong> kind of person. I saw it on TV.&quot;
+
+<em>She frowned a bit after he said he was going to leave, but she couldn&#39;t keep him in her room forever, perhaps it was good for them to also have some time apart.</em>
+
+&quot;O-Of course! Bye Kataoka, I&#39;ve had fun today! P-Please remember to survive, okay? We&#39;ll be best friends once this is over!&quot; <em>She happily replied as she waved her hand.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">25-Jan-21 10:41 AM</span>
+
+            <div class="chatlog__message " data-message-id="803288392174403604" id="message-803288392174403604">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Ill give it some thought, for both of those ideas, I mean.&quot; He gave her a little headpat before heading off towards the door. &quot;I&#39;ll look forward to that, and Ill come back another time as well to give you some company. Until then,&quot; After pulling the door open, he gave her one last wave before closing the door.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">28-Jan-21 05:50 AM</span>
+
+            <div class="chatlog__message " data-message-id="804302284938280960" id="message-804302284938280960">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Today was the day, the day on which Aiko would do the absolute impossible. 
+
+As there was nothing to do, she decided to go and read a book, so she went to read a book.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/87cf5b7b42153cef8a4e7ac88b0af174-DDE8A.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Sonic49#7171" data-user-id="229350299909881876" style="color: rgb(67,120,252)">Sonic49 | ???</span>
+
+
+        <span class="chatlog__timestamp">31-Jan-21 07:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="805595464598552597" id="message-805595464598552597">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote">A sewing kit crashes through the ceil— I kid, it just appears there somehow.</div></span>
+
+                                <span class="chatlog__edited-timestamp" title="31-Jan-21 07:28 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">31-Jan-21 07:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="805595509137604697" id="message-805595509137604697">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>LET&#39;S GET TO WORK</em></span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="Mastermindstrueidentity" title="Mastermindstrueidentity" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/786629561777258517-4F98D.png">
+                                <span class="chatlog__reaction-count">1</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/61fa3a6144eea3f199dfb2d5134c9b3b-BB3C9.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="immabarbieboy#2072" data-user-id="671486547308183552" style="color: rgb(254,126,1)">Freddy</span>
+
+
+        <span class="chatlog__timestamp">31-Jan-21 07:43 PM</span>
+
+            <div class="chatlog__message " data-message-id="805599063851401236" id="message-805599063851401236">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((sewing kit brought to you by manami&#39;s funds</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">01-Feb-21 01:23 AM</span>
+
+            <div class="chatlog__message " data-message-id="805684680988164166" id="message-805684680988164166">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((tch i was too late</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/62fd444bb427f0aaf6a9546edb977126-8D33F.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aiko Maruyama#0000" data-user-id="800471563006246974" style="">Aiko Maruyama</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">01-Feb-21 04:21 AM</span>
+
+            <div class="chatlog__message " data-message-id="805729572695048252" id="message-805729572695048252">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>It was a busy day for Aiko... there were obvious reasons for that, not that anybody knew. And she definitely had to keep her new kit a secret for a while.
+
+After spending hours knitting pointless clothes for seemingly nobody, she got a little bored and decided to go to her favorite room, the white room!</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/87cf5b7b42153cef8a4e7ac88b0af174-DDE8A.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Sonic49#7171" data-user-id="229350299909881876" style="color: rgb(67,120,252)">Sonic49 | ???</span>
+
+
+        <span class="chatlog__timestamp">06-Feb-21 06:04 PM</span>
+
+            <div class="chatlog__message " data-message-id="807748495482159144" id="message-807748495482159144">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote">This room is locked for now.</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/87cf5b7b42153cef8a4e7ac88b0af174-DDE8A.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Sonic49#7171" data-user-id="229350299909881876" style="color: rgb(67,120,252)">Sonic49 | ???</span>
+
+
+        <span class="chatlog__timestamp">07-Feb-21 03:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="808068626493341736" id="message-808068626493341736">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote">BTW, I&#39;ll be doing the whole room thing tomorrow, not today. Super Bowl (well, I&#39;m going to be forced to watch it, anyways) and focusing on stuff in another KG go brr.</div></span>
+
+                                <span class="chatlog__edited-timestamp" title="07-Feb-21 03:22 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">07-Feb-21 03:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="808071175639924746" id="message-808071175639924746">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Icannotwaittoseethis)))</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/cc48b4d39b8445d0f75594a761bb9b31-94A90.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shadowist#7826" data-user-id="730807602992381953" style="color: rgb(242,121,0)">Mist | Shadow</span>
+
+
+        <span class="chatlog__timestamp">07-Feb-21 03:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="808071245446119444" id="message-808071245446119444">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">uhoh//</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/87cf5b7b42153cef8a4e7ac88b0af174-DDE8A.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Sonic49#7171" data-user-id="229350299909881876" style="color: rgb(67,120,252)">Sonic49 | ???</span>
+
+
+        <span class="chatlog__timestamp">08-Feb-21 07:47 AM</span>
+
+            <div class="chatlog__message " data-message-id="808318151976157184" id="message-808318151976157184">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(soon™️</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/87cf5b7b42153cef8a4e7ac88b0af174-DDE8A.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Sonic49#7171" data-user-id="229350299909881876" style="color: rgb(67,120,252)">Sonic49 | ???</span>
+
+
+        <span class="chatlog__timestamp">08-Feb-21 09:01 AM</span>
+
+            <div class="chatlog__message chatlog__message--pinned" data-message-id="808336803891249223" id="message-808336803891249223">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>This room has now been opened. The room looks perfectly clean and as perfect as the day you got here, but there are also a few objects in this room, interestingly enough.</em>
+
+<em>First is a sweater.</em> &quot;Aiko lived in a rather protective household, living in a room with no windows and a single door. There was nothing special that required this, but her parents thought the outside world may corrupt her in a fashion. Regardless, she did manage to talk to a few people, mainly her grandmother. Her grandmother was knitting a sweater when Aiko became curious and asked for a few lessons. The rest, they say, is history.&quot;
+
+<em>Next (and last) is a stuffed cat. The stuffed cat, or at least a replica of it.</em> &quot;Aiko carries a stuffed cat wherever she goes... if she were to lose it, she would turn turn discomforted and anxious.&quot;
+
+<em>Finally, there is a portrait of her, similar to the portraits of the dead that appear in class trials, except not bound to a long pole. In terms of what was used here to mark her off, two... religious crosses were used.
+
+You cannot move or do anything with these items. They are bound to where they are.</em></span>
+
+                                <span class="chatlog__edited-timestamp" title="13-Feb-21 03:25 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">08-Feb-21 09:04 AM</span>
+
+            <div class="chatlog__message " data-message-id="808337450887151687" id="message-808337450887151687">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img class="emoji " alt="🥺" title="🥺" src="https://twemoji.maxcdn.com/2/72x72/1f97a.png"> ))</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="808337468788047913" id="message-808337468788047913">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Can I visit it))</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/87cf5b7b42153cef8a4e7ac88b0af174-DDE8A.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Sonic49#7171" data-user-id="229350299909881876" style="color: rgb(67,120,252)">Sonic49 | ???</span>
+
+
+        <span class="chatlog__timestamp">08-Feb-21 09:04 AM</span>
+
+            <div class="chatlog__message " data-message-id="808337520965713931" id="message-808337520965713931">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(yes</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/cc48b4d39b8445d0f75594a761bb9b31-94A90.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Shadowist#7826" data-user-id="730807602992381953" style="color: rgb(242,121,0)">Mist | Shadow</span>
+
+
+        <span class="chatlog__timestamp">08-Feb-21 09:16 AM</span>
+
+            <div class="chatlog__message " data-message-id="808340559671590952" id="message-808340559671590952">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">cate //</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/633ff6a6b4424dc32afe8afe6690a856-CEACD.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Mass#6343" data-user-id="217419998677696512" style="color: rgb(155,89,182)">Mitsuo Hideyoshi | Mass</span>
+
+
+        <span class="chatlog__timestamp">08-Feb-21 10:10 AM</span>
+
+            <div class="chatlog__message " data-message-id="808354079746686976" id="message-808354079746686976">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">The slight creaking of the door filled the once-vacant room with the presence with a bit of life, a silhouette&#39;s presence greeting the room. Specifically, it was Mitsuo, who once went by the name, Kataoka. A sorrowful look plagued his face, although it seems he entered here with a sense of purpose. He took a few steps inside, one at a time and each of them unveiling an interaction he once had with Aiko.
+
+He stood in the middle of it all, familiar items placed inside and ones he only took one glance of. Well, all except for her stuffed cat. He went over to where it was placed, placing his hand on Natsuzuki&#39;s head, reminding him of the number of times he&#39;s pat her head as a sign of recognition. A bittersweet smile erected itself upon the edges of his lips as he reminisced that detail.
+
+He slowly took his hand off of the cat&#39;s head and walked over to her portrait, her face crossed out by two crosses. He stood there, towering over it at first before kneeling down to its height. &quot;You&#39;ve gotten much shorter since I last saw you huh...&quot; He joked, albeit in rather bad taste. It was his idea of trying to lighten himself up, or at least its one way to interpret it. Kneeling down and just talking to her for a bit didn&#39;t seem practical nor did he have the energy to keep that repetitive position so he got comfortable and sat down cross-legged.
+
+&quot;First of all. Im...really sorry. For lying to you. You were definitely one of the only people here I could trust and that little thing I wanted to tell you...&quot;
+
+&quot;It had something to do with my identity. I wasn&#39;t the...cheery guy you got to know nor was I very kind to people. I was... quite the opposite. But it was thanks to that that I got to know you. I got closer to you, all thanks to my facade and I never would&#39;ve thought that I&#39;d be grateful towards my fake persona of all things.&quot;
+.
+.
+.</span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="&#127467;" title="&#127467;" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/1f1eb-E45E1.png">
+                                <span class="chatlog__reaction-count">2</span>
+                            </div>
+                    </div>
+            </div>
+            <div class="chatlog__message " data-message-id="808354088990277642" id="message-808354088990277642">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;I would&#39;ve preferred to tell you this in person. I even left a note in case I died unexpectedly and... I kind of regret not telling you sooner. Cause now you&#39;re off to a faraway place. One I can&#39;t reach at the moment.&quot;﻿
+
+&quot;Second, I&#39;m...sorry for being unable to keep my end of the promise. I promised that Id keep you alive so long as I was here and yet... Here we are...&quot; He hung his head down, a feeling of remorse creeping up to him with its tendrils digging deep into him. However, he&#39;s succumbed to that for long enough.﻿
+
+&quot;I will, however, hold one promise that I made to you. That being, staying alive and seeing the conclusion of this killing game. Although, I really would&#39;ve preferred if I could see it together with you...&quot;
+
+&quot;Ah, jeez. Look at me being all negative... Its usually my style to be the pessimist but I think that&#39;ll change overtime. All thanks to you, you could say.&quot;
+
+&quot;Thank you. Thank you for being... You. And providing me a sense of friendship I never knew I needed. Despite me throwing away every notion of it during my early life, you managed to pull me back into it.&quot;
+
+&quot;Thank you. For being my friend. And for now, I&#39;ll see you later.&quot; As he said so, he pulled out a folded piece of paper, leaning it against her portrait. A soft yet trembling smile formed, one that was bittersweet in nature and one that was meant to be a farewell to his deceased friend. Once he&#39;s said all he could, he stood up, turned his back and left the room with a sense of closure.</span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="❤️" title="❤️" src="Danganronpa_%20Prospective%20Despair%20-%20Dorms%20%28KG%29%20-%20aiko-maruyama%20%5B799094279960133632%5D.html_Files/2764-18179.png">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+</div>
+
+<div class="postamble">
+    <div class="postamble__entry">Exported 69 message(s)</div>
+</div>
+
+</body>
+
+</html>

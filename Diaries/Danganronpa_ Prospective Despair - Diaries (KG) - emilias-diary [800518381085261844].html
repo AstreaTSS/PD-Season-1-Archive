@@ -1,0 +1,2270 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Danganronpa: Prospective Despair - emilias-diary</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        /* General */
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
+    font-weight: 700;
+}
+
+body {
+    font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    object-fit: contain;
+}
+
+.markdown {
+    max-width: 100%;
+    line-height: 1.3;
+    overflow-wrap: break-word;
+}
+
+.preserve-whitespace {
+    white-space: pre-wrap;
+}
+
+.spoiler {
+    /* width: fit-content; */
+    display: inline-block;
+    /* This is more consistent across browsers, the old attribute worked well under Chrome but not FireFox. */
+}
+
+.spoiler--hidden {
+    cursor: pointer;
+}
+
+.spoiler-text {
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-text {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler--hidden .spoiler-text::selection {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-image {
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.spoiler--hidden .spoiler-image * {
+    filter: blur(44px);
+}
+
+.spoiler--hidden .spoiler-image:after {
+    content: "SPOILER";
+    color: #dcddde;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 600;
+    padding: 100%;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    font-size: 0.9em;
+}
+
+.spoiler--hidden:hover .spoiler-image:after {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.quote {
+    margin: 0.1em 0;
+    padding-left: 0.6em;
+    border-left: 4px solid;
+    border-radius: 3px;
+}
+
+.pre {
+    font-family: "Consolas", "Courier New", Courier, monospace;
+}
+
+.pre--multiline {
+    margin-top: 0.25em;
+    padding: 0.5em;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+.pre--inline {
+    padding: 2px;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+.mention {
+    border-radius: 3px;
+    padding: 0 2px;
+    color: #7289da;
+    background: rgba(114, 137, 218, .1);
+    font-weight: 500;
+}
+
+.emoji {
+    width: 1.25em;
+    height: 1.25em;
+    margin: 0 0.06em;
+    vertical-align: -0.4em;
+}
+
+.emoji--small {
+    width: 1em;
+    height: 1em;
+}
+
+.emoji--large {
+    width: 2.8em;
+    height: 2.8em;
+}
+
+/* Preamble */
+
+.preamble {
+    display: grid;
+    margin: 0 0.3em 0.6em 0.3em;
+    max-width: 100%;
+    grid-template-columns: auto 1fr;
+}
+
+.preamble__guild-icon-container {
+    grid-column: 1;
+}
+
+.preamble__guild-icon {
+    max-width: 88px;
+    max-height: 88px;
+}
+
+.preamble__entries-container {
+    grid-column: 2;
+    margin-left: 0.6em;
+}
+
+.preamble__entry {
+    font-size: 1.4em;
+}
+
+.preamble__entry--small {
+    font-size: 1em;
+}
+
+/* Chatlog */
+
+.chatlog {
+    max-width: 100%;
+}
+
+.chatlog__message-group {
+    display: grid;
+    margin: 0 0.6em;
+    padding: 0.9em 0;
+    border-top: 1px solid;
+    grid-template-columns: auto 1fr;
+}
+
+.chatlog__reference-symbol {
+    grid-column: 1;
+    border-style: solid;
+    border-width: 2px 0 0 2px;
+    border-radius: 8px 0 0 0;
+    margin-left: 16px;
+    margin-top: 8px;
+}
+
+.chatlog__reference {
+    display: flex;
+    grid-column: 2;
+    margin-left: 1.2em;
+    margin-bottom: 0.25em;
+    font-size: 0.875em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    align-items: center;
+}
+
+.chatlog__reference-avatar {
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+    margin-right: 0.25em;
+}
+
+.chatlog__reference-name {
+    margin-right: 0.25em;
+    font-weight: 600;
+}
+
+.chatlog__reference-link {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chatlog__reference-link:hover {
+    text-decoration: none;
+}
+
+.chatlog__reference-content > * {
+    display: inline;
+}
+
+.chatlog__reference-edited-timestamp {
+    margin-left: 0.25em;
+    font-size: 0.8em;
+}
+
+.chatlog__author-avatar-container {
+    grid-column: 1;
+    width: 40px;
+    height: 40px;
+}
+
+.chatlog__author-avatar {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+.chatlog__messages {
+    grid-column: 2;
+    margin-left: 1.2em;
+    min-width: 50%;
+}
+
+.chatlog__author-name {
+    font-weight: 500;
+}
+
+.chatlog__timestamp {
+    margin-left: 0.3em;
+    font-size: 0.75em;
+}
+
+.chatlog__message {
+    padding: 0.1em 0.3em;
+    margin: 0 -0.3em;
+    background-color: transparent;
+    transition: background-color 1s ease;
+}
+
+.chatlog__content {
+    font-size: 0.95em;
+    word-wrap: break-word;
+}
+
+.chatlog__edited-timestamp {
+    margin-left: 0.15em;
+    font-size: 0.8em;
+}
+
+.chatlog__attachment {
+    margin-top: 0.3em;
+}
+
+.chatlog__attachment-thumbnail {
+    vertical-align: top;
+    max-width: 45vw;
+    max-height: 500px;
+    border-radius: 3px;
+}
+
+.chatlog__attachment-container {
+    height: 40px;
+    width: 100%;
+    max-width: 520px;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.chatlog__attachment-icon {
+    float: left;
+    height: 100%;
+    margin-right: 10px;
+}
+
+.chatlog__attachment-icon > .a {
+    fill: #f4f5fb;
+    d: path("M50,935a25,25,0,0,1-25-25V50A25,25,0,0,1,50,25H519.6L695,201.32V910a25,25,0,0,1-25,25Z");
+}
+
+.chatlog__attachment-icon > .b {
+    fill: #7789c4;
+    d: path("M509.21,50,670,211.63V910H50V50H509.21M530,0H50A50,50,0,0,0,0,50V910a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50h0V191Z");
+}
+
+.chatlog__attachment-icon > .c {
+    fill: #f4f5fb;
+    d: path("M530,215a25,25,0,0,1-25-25V50a25,25,0,0,1,16.23-23.41L693.41,198.77A25,25,0,0,1,670,215Z");
+}
+
+.chatlog__attachment-icon > .d {
+    fill: #7789c4;
+    d: path("M530,70.71,649.29,190H530V70.71M530,0a50,50,0,0,0-50,50V190a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50Z");
+}
+
+.chatlog__attachment-filesize {
+    color: #72767d;
+    font-size: 12px;
+}
+
+.chatlog__attachment-filename {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.chatlog__embed {
+    display: flex;
+    margin-top: 0.3em;
+    max-width: 520px;
+}
+
+.chatlog__embed-color-pill {
+    flex-shrink: 0;
+    width: 0.25em;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.chatlog__embed-content-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em 0.6em;
+    border: 1px solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.chatlog__embed-content {
+    display: flex;
+    width: 100%;
+}
+
+.chatlog__embed-text {
+    flex: 1;
+}
+
+.chatlog__embed-author {
+    display: flex;
+    margin-bottom: 0.3em;
+    align-items: center;
+}
+
+.chatlog__embed-author-icon {
+    margin-right: 0.5em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.chatlog__embed-author-name {
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-title {
+    margin-bottom: 0.2em;
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-description {
+    font-weight: 500;
+    font-size: 0.85em;
+}
+
+.chatlog__embed-fields {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chatlog__embed-field {
+    flex: 0;
+    min-width: 100%;
+    max-width: 506px;
+    padding-top: 0.6em;
+    font-size: 0.875em;
+}
+
+.chatlog__embed-field--inline {
+    flex: 1;
+    flex-basis: auto;
+    min-width: 150px;
+}
+
+.chatlog__embed-field-name {
+    margin-bottom: 0.2em;
+    font-weight: 600;
+}
+
+.chatlog__embed-field-value {
+    font-weight: 500;
+}
+
+.chatlog__embed-thumbnail {
+    flex: 0;
+    margin-left: 1.2em;
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-image-container {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-image {
+    max-width: 500px;
+    max-height: 400px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-footer {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-footer-icon {
+    margin-right: 0.2em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.chatlog__embed-footer-text {
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+.chatlog__reactions {
+    display: flex;
+}
+
+.chatlog__reaction {
+    display: flex;
+    align-items: center;
+    margin: 0.35em 0.1em 0.1em 0.1em;
+    padding: 0.2em 0.35em;
+    border-radius: 3px;
+}
+
+.chatlog__reaction-count {
+    min-width: 9px;
+    margin-left: 0.35em;
+    font-size: 0.875em;
+}
+
+.chatlog__bot-tag {
+    position: relative;
+    top: -.2em;
+    margin-left: 0.3em;
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    vertical-align: middle;
+    line-height: 1.3;
+    background: #7289da;
+    color: #ffffff;
+    font-size: 0.625em;
+    font-weight: 500;
+}
+
+/* Postamble */
+
+.postamble {
+    margin: 1.4em 0.3em 0.6em 0.3em;
+    padding: 1em;
+    border-top: 1px solid;
+}
+    </style>
+    <style>
+        /* General */
+
+body {
+    background-color: #36393e;
+    color: #dcddde;
+}
+
+a {
+    color: #0096cf;
+}
+
+.spoiler-text {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.spoiler--hidden .spoiler-text {
+    background-color: #202225;
+}
+
+.spoiler--hidden:hover .spoiler-text {
+    background-color: rgba(32, 34, 37, 0.8);
+}
+
+.quote {
+    border-color: #4f545c;
+}
+
+.pre {
+    background-color: #2f3136 !important;
+}
+
+.pre--multiline {
+    border-color: #282b30 !important;
+    color: #b9bbbe !important;
+}
+
+/* === Preamble === */
+
+.preamble__entry {
+    color: #ffffff;
+}
+
+/* Chatlog */
+
+.chatlog__message-group {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.chatlog__reference-symbol {
+    border-color: #4f545c;
+}
+
+.chatlog__reference {
+    color: #b5b6b8;
+}
+
+.chatlog__reference-link {
+    color: #b5b6b8;
+}
+
+.chatlog__reference-link:hover {
+    color: #ffffff;
+}
+
+.chatlog__reference-edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__author-name {
+    color: #ffffff;
+}
+
+.chatlog__timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__message--highlighted {
+    background-color: rgba(114, 137, 218, 0.2) !important;
+}
+
+.chatlog__message--pinned {
+    background-color: rgba(249, 168, 37, 0.05);
+}
+
+.chatlog__attachment-container {
+    background-color: #2f3136;
+    border-color: #292b2f;
+}
+
+.chatlog__edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__embed-color-pill--default {
+    background-color: rgba(79, 84, 92, 1);
+}
+
+.chatlog__embed-content-container {
+    background-color: rgba(46, 48, 54, 0.3);
+    border-color: rgba(46, 48, 54, 0.6);
+}
+
+.chatlog__embed-author-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-author-name-link {
+    color: #ffffff;
+}
+
+.chatlog__embed-title {
+    color: #ffffff;
+}
+
+.chatlog__embed-description {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-field-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-field-value {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-footer {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__reaction {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.chatlog__reaction-count {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Postamble */
+
+.postamble {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.postamble__entry {
+    color: #ffffff;
+}
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(block => hljs.highlightBlock(block));
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler--hidden');
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/a6bf72058896bd5a7feafae436203daa-25C62.png" alt="Guild icon">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">Danganronpa: Prospective Despair</div>
+        <div class="preamble__entry">Diaries (KG) / emilias-diary</div>
+
+
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/87cf5b7b42153cef8a4e7ac88b0af174-DDE8A.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Sonic49#7171" data-user-id="229350299909881876" style="color: rgb(67,120,252)">Sonic49 | ???</span>
+
+
+        <span class="chatlog__timestamp">17-Jan-21 07:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="800519307163074571" id="message-800519307163074571">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">( <span class="mention" title="Laplace&#39;s Elkian#8290">@Emi saved the world</span> e
+(you can do pretty much whatever with this channel
+(and if you want to reveal it in case you die, just let an admin or me know</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">17-Jan-21 07:19 PM</span>
+
+            <div class="chatlog__message " data-message-id="800519736193974312" id="message-800519736193974312">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((<img class="emoji " alt="Mastermindstrueidentity" title="Mastermindstrueidentity" src="https://cdn.discordapp.com/emojis/786629561777258517.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">18-Jan-21 02:59 AM</span>
+
+            <div class="chatlog__message " data-message-id="800635450535837736" id="message-800635450535837736">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 1 of this...situation,
+
+As far as I know, there&#39;s one person behind this; Blake Fleming, who I will now be referring to as the liberal. He brought me and a bunch of other people here. I&#39;ll eventually find a way to stick it to him. For now, all I have to do is wait around for the opportunity to be given to me.
+
+First things first. I&#39;ve run into some interesting people. I can put faces and names together using this tablet here. So I&#39;ve spoken to both Daisy and Prince at first. Prince&#39;s actual name is Eternity but I really don&#39;t wanna call her that. For some reason it sounds depressing. Next we have Courage the Cowardly Scientist, Kiyoshi. That dude is just weird, I have no idea if he&#39;s scared or not, but I can already tell we won&#39;t mesh well. There&#39;s my temper, and his...well...everything goddamnit. If he can just get himself to be less of a tool, that would be greatly appreciated. Next up on the list is my fellow blueberry. According to the pad, her name is Rena. A chess player. Maybe she&#39;ll be useful, only time can tell...
+
+Oh great just writing this way means I&#39;m not even setting a good example for myself. I gotta get myself back on track, otherwise I&#39;ll lose myself in the sauce. What&#39;s the sauce? Oh I hope it&#39;s marinara... Wait no... I&#39;ll lose myself, in myself. I already know I have this aggressive wild side that I let slip cause it&#39;s real easy for people to set me off. Maybe there&#39;s someone around that can help me with my temper. It&#39;ll be better to help me lead these people.
+
+Not gonna lie, none of the people I&#39;ve spoken to seem like the leader type at all. Well there is Rena, but she seems to have her own problems...
+
+Oh yeah, I also was given a megaphone. That&#39;ll be nice to have when dealing with the others. The pad says that there are a bunch more people around, which is true, I saw them all. I&#39;ll try to get myself on good terms with the majority of them. 
+
+Welp, let&#39;s hope none of us are stupid enough to bend to that damn liberal&#39;s word...</div></span>
+
+                                <span class="chatlog__edited-timestamp" title="18-Jan-21 03:31 AM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">19-Jan-21 03:30 AM</span>
+
+            <div class="chatlog__message " data-message-id="801005560391794718" id="message-801005560391794718">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 2 of this shit,
+
+I ran into Daisy again today. She seemed rather pissed off, and it also seemed like she was missing something. I do remember her mentioning something about a teddy or something like that. Probably helps the girl sleep. Maybe if I find something like that, I can get it to her. That&#39;ll be nice, cause then it means I&#39;ll have someone on a good side. It&#39;ll balance out the absolute case that is Kiyoshi. I need to talk to him actually, I want to...ask him a few things...
+
+Luckily my temper didn&#39;t go all out today. I felt it rising, but I was able to suppress it. Ever since...what happened with my parents...aha... I&#39;ve been a lot more aggressive. Just learning the truth of all that pissed me off. Learning the truth about myself pissed me off even more.
+
+&quot;Emilia you&#39;re perfect, you have no flaws.&quot;
+
+&quot;Emilia you should be this and that.&quot;
+
+&quot;Emilia, strive to be better than the rest of them. You know you are, so work.&quot;
+
+Be quiet bitch. You lost your space in my mind the moment you betrayed my trust. You and father both. You decided that you would play a game. A game of life. I was the pawn, you were the players. This pawn promoted to a queen and decided to rebel against the damn gods of the game. If I ever see your faces again, you&#39;re dead. I won&#39;t hesitate to beat you both six feet under...
+
+Emi, your temper is... I need to fix myself. Just writing this helps me to relieve my stress, but it&#39;s just a temporary solution to a permanent problem. As long as things remain like this, nothing will change. I&#39;m happy that way. I&#39;m content with myself right now despite how much malice I harbour. I just need a true outlet. 
+
+Oh yeah, writing this made me remember who I am. I&#39;m the Ultimate Paradigm still, that much hasn&#39;t changed whatsoever. If that Liberal is still breathing, then I can defy him. If people can see me successfully stand up for myself, they&#39;ll to follow. No one has to die
+
+And if it comes to it, I&#39;ll sacrifice myself for them. I&#39;m a model example.</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">20-Jan-21 11:20 AM</span>
+
+            <div class="chatlog__message " data-message-id="801486430832033832" id="message-801486430832033832">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 3 unfortunately,
+
+I haven&#39;t done much today, so I&#39;ll just talk to myself for a little bit. This diary does help me vent a bit, and as a result, my temper will be a bit lowered for the day. That&#39;s always beneficial for everyone else.
+
+This whole thing got me thinking. What if one of my siblings, or my friends were caught up in this like me. My siblings Takkat and Koko are ultimates as well, and two of my friends are ultimates. Well, I guess only one of those two friends is really my friend. That thorny rose doesn&#39;t seem to like getting close to me. I didn&#39;t even do much to her, she just doesn&#39;t approach, and is pretty damn hard to casually walk up to. There&#39;s also the fact that I kinda blew up on her once and she ran away. I did apologize for that, but I think she didn&#39;t appreciate that. Since then, there&#39;s always been that feeling of a rivalry between us. For what though? What would we be fighting over?
+
+Oh... I know...
+
+Moving on, I really need to talk about my parents again. I&#39;m just a pawn after all. I&#39;m always used so people can move up in life. That&#39;s how it was before, and my talent kinda shows that it&#39;ll still happen nowadays. I&#39;m a model, an example. If I take the lead, people will see how I work. If I mess up, they&#39;ll use me as an example and take a different route. It isn&#39;t bad per se, but I don&#39;t like the feeling of being a puppet, or being stepped all over.
+
+My problems can go away if I just get myself to befriend a few people. Maybe Prince and Daisy will warm up to the idea of my hothead being a friend. The other blueberry, and the tool of a scientist could work, but they need a lot more time, especially the latter. Oh great now I&#39;m wishing I made more friends back in school. There was only a small group of five of us that I would actually consider friends. Everyone else knew who I am, but they kept their distance from me. 
+
+Isolation isn&#39;t a game I want to play. I just want to have my own fun, and share it with those around me. That&#39;s all...</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">21-Jan-21 02:54 AM</span>
+
+            <div class="chatlog__message " data-message-id="801721290103717890" id="message-801721290103717890">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 4 of an interesting time,
+
+Met a new person named Saruto. He&#39;s apparently the Ultimate Table Tennis Player. That&#39;s all well and good, but why does he have that positive outlook? Like yeah, being optimistic is a good thing, but being overly positive will only prove to be detrimental into he long run. Why? Because positivity just doesn&#39;t work in some cases. Like damn, I&#39;ll support whatever he stands for, but like hell will anyone catch me acting that way.
+
+Sometimes I think I go too hard on people. Whenever I meet someone and witness their personality, I always think of ways to get them in a better light. I do all this, and I don&#39;t bother seeing how I can improve myself. Since the incident, I&#39;ve seen myself to be rather neutral. I don&#39;t dislike who I am, but I don&#39;t overly like it. To me, that&#39;s a nice middle ground. I like things about me, and I don&#39;t like things about me. Realistically, that&#39;s how all people are. There are parts that you just can&#39;t ever like about yourself. You try to mask them, but they remain there for whatever reason.
+
+Like hell have my problems disappeared.
+
+Great now I have to write about my parents again. Those damn...humans...made me what I am. But what am I? I&#39;m not even human. I can&#39;t be. I&#39;m quite literally different from everyone else around here. Having this thing about me always leads my ass to alienation. That&#39;s what I became the Ultimate Paradigm for. To be a guiding voice for those that were just like me, and for those that just need someone to follow. I must admit that it is actually pretty damn nice to have the following that I do. The support I receive from them all is something I&#39;m truly grateful for. 
+
+Whether I post on my site, whatever social media, or if I suddenly appear in a magazine, I always get showered with complimentary comments. I wonder how much their perception of me would change if the truth about me is to be revealed. Messed up.
+
+To think that it all started one day during a photo shoot... Striking...</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">22-Jan-21 03:06 AM</span>
+
+            <div class="chatlog__message " data-message-id="802086868962246666" id="message-802086868962246666">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">A striking day 5,
+
+Before the obvious thing I have to write about, I met another new person today. Nigai Choko, who is just called Choko. According to the tablet, she&#39;s the ultimate painter. Maybe I could ask her to paint something for me in the future. That would be fun I guess, and if she wants, I would be able to help her. She strikes me as a child, and children normally need someone to guide them. I of course can be that person. This energy will keep me awake.
+
+Damn am I gonna miss sleep...
+
+Speaking of which, the liberal decided to deny us of sleep, otherwise he&#39;s gonna kill us himself I think. So I&#39;m here for now. I did end up getting over ten hours of sleep last night so realistically, I&#39;ll be good until tomorrow night. I just need to continue eating healthy like I always do. There&#39;s absolutely no point in compromising my health more.  
+
+Speaking my of not getting any sleep, my sister Koko... She was a bit of an insomniac when I was taken in by her and Takkat. Takkat got a good amount of sleep. Hmmm, if I keep thinking more, Seimi and Chichi were similar cases. They tended to their health, and I guess that rubbed off on me a little too well. Look at me getting a bit too much sleep nowadays.
+
+Ah, more tangents...
+
+I need to keep my focus on one or two topics every entry don&#39;t I? But that would be boring actually. Who cares? Not like anyone would be reading this. That&#39;s how other people should be thinking. Too often do I find people to be conscious of how they act around people. I find no problem with being who I am. Is that why I&#39;m the Ultimate Paradigm? My message is simply to just live however you wanna live it. No one should have to say otherwise. This...game I suppose...acts against my words, which is why I want to end it by myself. No one needs to get hurt from my actions if it can be helped.
+
+If only I could set a better example to everyone. They&#39;re all bit out there, so I doubt that my messages will get very far. There&#39;s no harm in trying though.</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">23-Jan-21 12:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="802596747091771402" id="message-802596747091771402">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">No diary entry for Day 6 because Emi didn&#39;t spend the night in her room.</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">24-Jan-21 11:28 AM</span>
+
+            <div class="chatlog__message " data-message-id="802937913079496736" id="message-802937913079496736">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Oops I fell asleep before doing day 7,
+
+Day 6 was spent with Coco. We came up with nicknames for other people, and talked about stuff like family. No diary entry for that unfortunately. Not like it matters in the long run right?
+
+Current nicknames:
+- Eternity: Prince
+- Choko: Coco
+- Daisy: Blossom
+- Rena: Rook
+- Kiyoshi: Kiyo
+
+Definitively gonna come up with more with her in the future once I get to know more people. Speaking of people, we have our first death. The ultimate cooker was dead in the aquarium room. It was a pretty big shock, but it&#39;s understandable. Someone would eventually have to snap under the pressure. Seriously, not getting any sleep is bound to hurt someone in some way. I myself was exhausted. That&#39;s why I&#39;m late with this one.
+
+There seems to be a good amount of evidence to help with finding the killer. According to the rules, which strikes me weirdly, whoever we expose as the murderer will be executed. What does that mean? Will Blake just put a bullet in their head or will it be something unexpected like that exploding body on day one? I would be lying if I said I wasn&#39;t at all interested in what it would be like. Though that would mean someone would have to die. I have to set an example of myself and hopefully send a message to everyone. I have a feeling some people won&#39;t take this seriously, and that scares me. This is a matter of life and death.
+
+Well, if someone is caught slacking, I have my megaphone just in case.
+
+That&#39;s just an option I have just in case I need to get everyone back on track. Besides, I believe that some sort of factor that everyone can go up against will continue unifying them all. If I can execute this idea well enough, we&#39;ll get through it with little problems coming from us. In fighting is pointless, and it would just lead to more unfortunate deaths going forward. I care for everyone, so if the fighting causes hate, then no one will care for the deaths.
+
+Then we might all die won&#39;t we. I won&#39;t let that happen.</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">25-Jan-21 03:04 AM</span>
+
+            <div class="chatlog__message " data-message-id="803173507788963861" id="message-803173507788963861">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">And here comes Day 8,
+
+Our first trial happened today. We all managed to get by, with some unexpected help from the liberal. I thought he would withhold information from us, but when we asked, he came clean. There is some sort of honour in that, but we shouldn&#39;t get complacent. I have a feeling that this life of ours will only continue to become more and more difficult. We&#39;ll need more and more as things start catching up to us. If it comes to it, I can still act as their guiding voice.
+
+Speaking of guides, I ended up guiding myself to a new floor that was opened. This is one tall skyscraper considering that it was the 146th floor. There were some interesting places I saw that included a game room, and a library. I didn&#39;t give myself a tour cause I just wanted to come back here and catch up on the sleep I missed. Speaking of which, normally taking a nap will cause people to go to sleep a bit later into the night. I&#39;m a different cass. Maybe it&#39;s because of how I always sleep. I sleep and wake up at the times I scheduled and alarm for, and now it&#39;s pretty much built into me. The others could potentially benefit from getting a consistent amount of sleep.
+
+Maybe they&#39;ll listen to me. Thankfully didn&#39;t make anyone mad at me during the trial. It&#39;s good that I didn&#39;t make any enemies there. Wouldn&#39;t have been good for any of our images.
+
+I&#39;ll have to do some things tomorrow in order to strengthen my bonds with other people. Just having a stronger bond with Coco, while nice, isn&#39;t enough for someone like me. I&#39;m not an introvert. That reminds me, I need more nicknames for everyone. I can run them by Coco to see if she likes them. If we&#39;re the only two that refer to the others by nicknames, that&#39;ll be perfectly fine. I don&#39;t see a problem with a select amount of people calling a group of people nicknames. 
+
+It&#39;s good for psyche you know. And knowing a child like Coco, something like that is especially important. I can&#39;t have her breaking out into tears.</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">26-Jan-21 02:07 AM</span>
+
+            <div class="chatlog__message " data-message-id="803521460567539775" id="message-803521460567539775">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">An unproductive Day 9,
+
+Yeah, I didn&#39;t do much at all today. Just got my meals, went for a walk, and a bunch of other casual things all by myself. Look at me, setting an example for nobody because they can&#39;t see me. Tomorrow I&#39;ll go find someone I haven&#39;t spoken to. I need to make more nicknames. Coco would be happy to know that I have more right? At least that&#39;s what I&#39;m hoping for.
+
+And well, since there&#39;s little else to talk about, I may as well vent my frustrations.
+
+I&#39;ve spoken negatively about my parents, and there are good reasons for it. It&#39;s a secret I try to keep becuase people like attributing their perception of adults into their children as well. It&#39;s unfair, which is why I&#39;ve managed to keep my situation under wraps. I wouldn&#39;t be the Ultimate Paradigm with an image like that now would I?
+
+Let&#39;s start with my mother. She&#39;s a thief. Whoever we worked with, she would take the money. Yeah that&#39;s all well and good, acting as my manager. Mhm sure. Yeah no she would embezzle pretty much everything she could get her hands on. She was inevitably caught of course, by yours truly. It was sickening to witness. Apparently it had been going on for as long as I&#39;ve been modelling, so she&#39;ll be locked up for quite some time. 
+
+My father on the other hand is an extortionist. His support for me was all a ruse while behind the scenes, he would do all sorts of things to the women working with me. Not only that, but he would use the situation after my mom got locked up to rake in extra cash for himself. An absolute scumbag of a dad if you ask me. Using my status to his own advantage. Did I ask to be put in this situation? Absolutely not.
+
+If they hadn&#39;t done what they did to me, I would probably just be a normal girl. I would&#39;ve preferred that over dealing with these two hellspawns. Though, it did bring me to my new family. Takkat and Koko. They made me feel like I was a normal person, unlike my parents. I wasn&#39;t an alien to them. My life was appreciated...</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">27-Jan-21 12:14 PM</span>
+
+            <div class="chatlog__message " data-message-id="804036522885513236" id="message-804036522885513236">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Are 10th days filled with wine?
+
+I...fell asleep in the middle of writing this. Well, I guess the beginning cause I woke up and just saw the first sentence written down. That&#39;s awkward... Anyways, I did end up meeting someone new today. He struck me differently. That&#39;s both a good and a bad thing. He seems to be some sort of wild card in all honesty, and only time can tell exactly who he is, and what he&#39;s here for. Why? Because he wasn&#39;t one of the original people here.
+
+Kaeru Sasaki, Ultimate Animator. For whatever reason, he doesn&#39;t like being called Kaeru, so I called him Sake. The wine. Yeah.
+
+Well that&#39;s not the focus of what I wanted to write about today. Though is did happen around the same time. 
+
+When I was talking to Sake, there was a small time frame where I was eating a chocolate bar. After I finished with it, I tossed it off the edge, expecting it to hit the bottom. Apparently my eyes aren&#39;t very good, or I&#39;m just dumb. It got caught on some glass, not travelling to the green of the bottom. It&#39;s been on my mind since seeing it. I guess we really are truly trapped here. Jumping off will only result in us smashing on the glass I suppose. But if enough of us jump, will the glass break? Or is it indestructible? I&#39;ll assume it&#39;s the latter for now. If I do find out it&#39;s the former, then that&#39;ll give birth to some ideas I have. 
+
+Now that I think of it, maybe there&#39;s a way to bypass the rules in order to not be punished for it. Some tampering would be fun. If I set a large enough example of myself, then maybe other people will follow suit and continue the work I started. What would the liberal do against it? If it&#39;s not against the rules, he can&#39;t object to it right? If he goes against that principle, then won&#39;t that just introduce more chaos? Given enough time, maybe it&#39;ll end this game somehow. 
+
+I already have an idea of how to end this game. I won&#39;t let anyone know because it&#39;ll place me in a very bad light. I don&#39;t want that...for now...</div></span>
+
+                                <span class="chatlog__edited-timestamp" title="27-Jan-21 12:14 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">28-Jan-21 02:55 AM</span>
+
+            <div class="chatlog__message " data-message-id="804258314099752990" id="message-804258314099752990">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Emi didn&#39;t sleep in her room this night. No day 11 entry.</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">29-Jan-21 02:51 AM</span>
+
+            <div class="chatlog__message " data-message-id="804619839837700146" id="message-804619839837700146">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 12 is weird,
+
+Well another catalyst was thrown into this fire. This time, apparently we&#39;ll be hallucinating when talking to another person. I don&#39;t know how badly this will affect someone, but all I can say is that it will. I can&#39;t guarantee that what I see will help my already semi-weak mentality. Apparently my loved ones will end up dying in these visions.
+
+Takkat, Koko, Seimi, and Chiko. I&#39;d assume it&#39;s them that will end up in my eyes as I speak to other people. I&#39;ll be sure to bring my megaphone with me just in case. Loud noises do tend to serve as a distraction. If I can keep it out for an adequate amount of time, that would be ideal for me. It doesn&#39;t have to be for more than a minute. Just a few seconds of distractions will work for me. It&#39;ll trigger a domino effect where my mind will just continue falling elsewhere. That&#39;s at least what I think will happen. According to Haku, theory and practice are two very different things. 
+
+And now onto something different
+
+The other day. Coco and I decided that we should gather everyone and have some sort of game night. That will definitely be fun. As long as Saruto doesn&#39;t push for table tennis, the playing field should be about even. I can already see it, all smiles, a couple of salty moments of course. Humans can&#39;t be expected to be happy about loss all the time. For the most part though, I&#39;m expecting good things. 
+
+I&#39;m the Ultimare Paradigm for god&#39;s sake. Even if the vibe isn&#39;t good initially, I can definitely set the example for everyone and bring the mood up. That&#39;s what I&#39;m good at, switching moods and whatnot. People normally look at me anyways. If I&#39;m down, they&#39;ll feel down. I can&#39;t have that.
+
+And if this whole idea flops, I always have more to bring us all together. 
+
+Man, despite everything, I can still find enjoyment in what I do. How very striking...</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">30-Jan-21 02:52 AM</span>
+
+            <div class="chatlog__message " data-message-id="804982296452923412" id="message-804982296452923412">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Oh well this is Day 13,
+
+What&#39;s up with me and not doing anything for about a day after doing something the previous day? Just a question, I&#39;m not complaining or anything. Having some time to myself to think properly is always good. It helps to clear my mind, and keeps my own temper in check. If I wasn&#39;t so self aware, then I would definitely let myself go wild a lot more. As far as I remember, I&#39;ve only gotten pissed off about three times during this whole ordeal. That&#39;s honestly an achievement for me. I get set off easily.
+
+But it&#39;s not like I don&#39;t have my own reasons for it.
+
+There are three main sources that feed my temper. My parents, my work, Chiko. Firstly, parents becuase of what they did, using me to their advantage only to get arrested. Just writing this is already making me mad for obvious reasons. It strikes me wrongly. Secondly, my work can get pretty stressful. I work as a model, a public speaker, and a counsellor of sorts. Yeah I enjoy it, but it really gets to me knowing that people really only look to me not for who I am, but for what I am. Though that&#39;s personal becuase I normally don&#39;t get close to the people that decide to come to me for their personal reasons. Thirdly, Chiko. Our rivalry over the years has never made things too easy. She&#39;s an odd case though, acting like a chuunibyou. All high and mighty. I&#39;ve yelled at her multiple times. It&#39;s a miracle that we still associate with each other. Maybe it&#39;s some mutual understanding or something. I can&#39;t really explain it at all in all honesty.
+
+Moving on, I still wonder how the others are doing. In my last entry, I briefly mentioned them. Of course those are all nicknames. I won&#39;t give out their real names becuase if I die, someone may get their hands on this. If it&#39;s Coco, then it&#39;s fine, but other people are a definite no. They don&#39;t have that level of trust right now, even if I do like a few of them.
+
+I should get closer to other people actually. It&#39;ll be beneficial to myself...</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">31-Jan-21 03:39 PM</span>
+
+            <div class="chatlog__message " data-message-id="805537757766090883" id="message-805537757766090883">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">What&#39;chu know bout love Day 14?
+
+Yeah yeah I fell asleep last night, and just woke up late. Judge me all you want. Someone like me needs her beauty sleep in order to function properly through the day. Maybe that&#39;s why I do nothing every other day. Well if I could actually explain it, I would. It&#39;s just a part of me. I wouldn&#39;t change it cause that would mean I would rewrite the future. What does that mean? I don&#39;t know. Chiko would say that a lot, saying that Seimi would say it quite a bit as well.
+
+Anyways, we got a dead body woohoo. I think we&#39;re all gonna figure out who killed today. That&#39;ll be fun. I just need my megaphone as always, and it&#39;ll be good. Once again, I&#39;ll at least try to steer everyone, but based off the last one, my help isn&#39;t needed too much. Maybe if things get super crazy... Just maybe. Only then will I actually insert myself. 
+
+But I do have one idea.
+
+Oh yeah that reminds me. I met a new person... One of the liberal&#39;s friends. His name is Araki. He knows what&#39;s going on, and when I tried getting answers outta him, he ran. Luckily he was saved by the body announcement. I would&#39;ve cut him if he tried running again. Hell, I had him cornered on the rooftop. That pisses me off. He clearly doesn&#39;t care, and for that, I have a nickname for him. I&#39;ll be sure to let Coco know after this, because she&#39;s the other nicknamer of course.
+
+- Araki: Apathy
+
+It fits nicely. And at least now I know how to act around him. He seems to get scared easily, so I can use that to my advantage. I have the steak knife with me anyway, so I can always get him to scream if I want. People should follow this example honestly. In order to get yourself out of the grasp of death, don&#39;t be afraid to act out. I did, and it revealed a few things to me. Based off this, I have a way of escaping. I can&#39;t tell anybody though. I&#39;ll just become a target. They&#39;ll attack me, step on me, spit on me, and attempt to murder me. Nobody wants that.
+
+I&#39;m fine with it though, but not yet.</div></span>
+
+                                <span class="chatlog__edited-timestamp" title="31-Jan-21 03:40 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">01-Feb-21 02:39 AM</span>
+
+            <div class="chatlog__message " data-message-id="805703890422333470" id="message-805703890422333470">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Feeing Empty on Day 15.
+
+We had the trial today, and it turns out that Sake was the killer. It&#39;s not that I didn&#39;t expect something like that from happening, it&#39;s just that it feels hollow. We were investigating everything, then he just comes out and confesses. I was hoping it would be a bit more exciting honestly, but this is a game of life and death. Some things are bound to be mundane. Unfortunately, it was the trial that ended up feeling like that.
+
+Who am I kidding though, I should be grateful that we got an easy way out. Sake was right, we were going around in circles with our words. I&#39;m sure that through some process, we would have gotten to him, but this saved a lot of time. As a model for everyone, I should show that something like that is actually good. Sometimes sacrifice is necessary. Sake was the sacrifice this time, and he took two people as his price. As long as the majority of us remain alive, our losses will be minimal in the grand scheme of things. I can&#39;t show any of these thoughts to anyone. If I die though, maybe the liberal will expose all of this. That would be fun for them I&#39;m sure. 
+
+Oh what am I saying? Of course I&#39;m gonna live. To set an example, I won&#39;t die. I&#39;ll show my will to live, and other people will follow suit. I&#39;ve seen that people are at their strongest when their backs are against the wall. Maybe if I did something to push them to their limits, they&#39;ll show their true colours. Do they wanna live, do they wanna die, do they want everyone else to die, etc. 
+
+All these thoughts constantly run through my mind. Thinking backwards to see how I can use myself to benefit other people. My own version of love. Love...what is it that I actually love? Yeah other people, but...how do I truly explain it? I think I would do anything, to whatever end if it means saving someone from death. It would be even sweeter if it were to be someone like Coco. I can call her a friend.
+
+I&#39;ll have to find out what my true intentions are eventually.</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">02-Feb-21 03:01 AM</span>
+
+            <div class="chatlog__message " data-message-id="806071908109516811" id="message-806071908109516811">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 16 feels soupy...
+
+I&#39;m gonna do something a bit different today. After meeting Mini, I had the idea for listing everything out. She put it my head when it came to going off on tangents. So yeah, I&#39;ll just be listing down some random things tonight
+
+Nicknames (alive):
+Blake - Liberal
+Araki - Apathy
+Nigai - Coco
+Minestrone - Mini
+Rena - Rook
+Eternity - Prince
+Kiyoshi - Kiyo
+Daisy - Blossom
+
+Dead people:
+- Devon
+- Kyo
+- Saruto
+- Fukuhara
+- Sasaki
+
+Current inventory (not clothing):
+- Steak knife
+- Large knife
+- Megaphone
+- Pen + Paper
+
+People to keep tabs on:
+- Nigai
+- Kiyoshi
+- Rena
+- Araki
+
+Things to continue doing, or to start doing:
+- Finding loopholes in the rules
+- Annoying Blake with the megaphone
+- Getting people&#39;s attention to make an announcement via megaphone 
+- Make nicknames for everyone
+- Escape with whoever remains alive
+- Kill... Blake is my target...
+
+People back home:
+- Takkat
+- Koko
+- Chiko
+- Seimi
+- Akaru
+
+Random ideas that could be useful:
+- Tasers seem to be easy to use
+- Any kind of food can be made...
+- There are cleaning supplies
+- The incinerator has an odd timer thing
+- There&#39;s someone to talk to in the comms room
+- Nigai would like to do something in the game room with everyone
+
+People that I think could be killers:
+- Kiyoshi
+- Nigai
+- Karaoke
+- Oleander
+- Sairen
+- Amai
+- Amagi
+
+Note to self: These people seem the most likely. Anyone can kill.
+
+Simple diary entry today. I don&#39;t feel like writing much at all for some reason. I&#39;ll just get my sleep. This will be a useful page to refer back to in the future. Who knows when it&#39;ll help me out...</div></span>
+
+                                <span class="chatlog__edited-timestamp" title="03-Feb-21 12:15 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">03-Feb-21 03:26 AM</span>
+
+            <div class="chatlog__message " data-message-id="806440425057550344" id="message-806440425057550344">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">No diary entry for Day 17. Emi isn&#39;t feeling it, and so she went to sleep without writing.</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">04-Feb-21 02:28 AM</span>
+
+            <div class="chatlog__message " data-message-id="806788154493239316" id="message-806788154493239316">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Motivation gone. Nothing for Day 18</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">05-Feb-21 02:24 AM</span>
+
+            <div class="chatlog__message " data-message-id="807149595020099606" id="message-807149595020099606">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 19 is sinking.
+
+No really. There&#39;s a sinking feeling in my chest. That liberal really decided to put us through another one of his...catalysts...to accelerate the process of us killing. I&#39;m still wondering what this does for him. Having all this useless death. In the end, I&#39;ll make sure that I&#39;m the one to personally end his life. No matter what the circumstances may be, it&#39;s completely unforgivable. It shouldn&#39;t strike anyone differently. Causing death like this... He&#39;ll get what&#39;s coming soon enough. Let me reiterate. I&#39;ll see to it personally.
+
+Moving on, I think Apathy will be less than willing to give out any answers to me. I don&#39;t really care. Since there is a loophole in the rules, he&#39;ll have no choice but to give up his knowledge to me. If I did read it correctly, killing him specifically means nothing for me personally, unless the liberal decides to bend the rules to have me die. That&#39;ll be truly twisted, but people will be able to follow my example. They&#39;ll keep twisting the rules, and end up getting out of here using their minds. But like hell will I die. I&#39;m getting out, and I&#39;m seeing everyone back home. I made a promise that no matter what would happen to me, I would go back. 
+
+After all, they&#39;re the only family I have left. I can&#39;t leave them.
+
+In a way, I suppose some people here could be considered family. I speak specifically towards Coco. And...just in case the worse happens. Coco, if you&#39;re reading this. I want you to know that I&#39;m grateful you took a shine to someone as fiery as I am. I tend to push people away cause of my temper and personal outlook on life. They say it&#39;s a a tad too depressing to them. It&#39;s not my fault that the &#39;Ultimate Paradigm&#39; bases her words off of her own reality.
+
+Maybe I should lighten up a bit though. The child seems to be doing fine despite everything going on. Speaking of which, I keep coughing while writing. If you see random lines all over the page connecting to the letters, then that&#39;s why.</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">06-Feb-21 10:50 AM</span>
+
+            <div class="chatlog__message " data-message-id="807639263646056488" id="message-807639263646056488">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 20 really shows my inconsistency...
+
+Welp, I fell asleep again. Fun right? Sleep is a good thing. If I don&#39;t sleep, I get...mad to say the least. This motive definitely isn&#39;t helping at all with my temper. I can feel it burning within me. Anyways, I just wanted to write about something important. Why my hair is blue.
+
+Piece over there, formerly named Rook, reminded me a bit of myself back then. It gave me memories of when I decided to come back to the only world I knew growing up. The world of modelling. Truth be told, it was a sad industry when I was there. It was like I was some beacon of light for everyone there. It was odd. Enough about that. The first time I left that world was due to my parents getting arrested. I&#39;ve already mentioned what they did. Writing it again would only piss me off. I ended getting taken in by Takkat and Koko, those two are my family. They&#39;re also Ultimates, but that&#39;s enough about them. I don&#39;t want to reveal much about my family. It&#39;ll compromise their safety.
+
+I won&#39;t be the cause of bad things happening to them.
+
+I was scrolling through some internet forums when I came across a thread talking about me. For whatever reason, they missed me. Like damn, am I really that important to them? That was secretly a blessing in disguise, as seeing that others wanted to see me again ignited that flame in my body once again. This time though, I wanted to strike those that saw me with something quite profound. 
+
+I got Koko to teach me how to dye my hair, and I ended up with the blue look I have today. It took a day or so, but I uploaded a picture online. It was titled &quot;Resurgence&quot; to announce my coming back to the scene. Of course, I was welcomed back by the people I worked with before, but I made sure everyone knew what I truly wanted. That&#39;s where I got the nickname &quot;Blue Blood&quot;. Like hell am I ever telling the people here that nickname. I don&#39;t wanna be looked at strangely. Though, that&#39;s already hard enough considering who I am...</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">07-Feb-21 02:52 AM</span>
+
+            <div class="chatlog__message " data-message-id="807881449201467453" id="message-807881449201467453">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 21
+
+Descent...
+
+The end...</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">08-Feb-21 01:53 AM</span>
+
+            <div class="chatlog__message " data-message-id="808229017604980816" id="message-808229017604980816">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 22...
+
+The ideas have been floating in my head...
+
+Another execution...
+
+I have a path...
+
+I just need two people to assist me...
+
+I have Piece...
+
+Now I need someone willing...
+
+Not Coco... 
+
+Not strong enough...
+
+I&#39;ll find a way...
+
+The Ultimate Paradigm always does...</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">09-Feb-21 01:14 AM</span>
+
+            <div class="chatlog__message " data-message-id="808581614367145984" id="message-808581614367145984">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 23?
+
+I&#39;m sleeping early tonight. My ideas need to keep growing. Expect a ton of writing soon...
+
+Good night Liberal.</div></span>
+
+                                <span class="chatlog__edited-timestamp" title="14-Feb-21 12:46 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">10-Feb-21 10:55 AM</span>
+
+            <div class="chatlog__message " data-message-id="809090152764407845" id="message-809090152764407845">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Woke up on Day 25, here&#39;s Day 24...
+
+So I have an idea to bypass the rules. If I say it here, then maybe someone in the future... No I&#39;m definitely gonna live, so it&#39;s pointless to say it now.
+
+Maybe Piece and Element will be willing to help me out here.
+
+Element is Mist by the way... Why am I telling myself?
+
+Okay see ya Diary...</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">11-Feb-21 12:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="809476288258506822" id="message-809476288258506822">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Maybe I should just write in the mornings instead... Day 25...
+
+I&#39;m gonna put my plan into motion today.
+
+I need someone not in the loop.
+
+Though if I find Piece, we can plan or whatever. That would be a lot of fun.
+
+Ok no time to write I need to get out of here...</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">12-Feb-21 01:53 PM</span>
+
+            <div class="chatlog__message " data-message-id="809859658230923346" id="message-809859658230923346">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 26...
+
+I don&#39;t know what I&#39;m supposed to write.
+
+All I know is that Process is taking the fall. 
+
+That&#39;s all.</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">13-Feb-21 02:24 AM</span>
+
+            <div class="chatlog__message " data-message-id="810048749262733322" id="message-810048749262733322">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 27!
+
+HAHA TAKE THAT I&#39;M DOING ONE ON TIME
+
+FUCK YOU...
+
+Who am I talking to?
+
+Alright anyways, I have the ideas flowing. I&#39;ll list them out here so I don&#39;t forget them at all. I&#39;ll let Piece in on my plans. Our alliance will get us pretty damn far. If I can get more, then I&#39;ll definitely be able to see this through.
+
+Target: Liberal
+Tools: Rope, taser, clothes, bandages, something sharp like my steak knife
+Decoys: Piece, Tide
+Tricks: Exploit loopholes, environments, hosts, and information
+Library: I hear that there are some useful things to read in there...
+
+He realistically can&#39;t stop us because we won&#39;t be going against the rules
+
+If all goes well, we&#39;ll be able to get . That liberal has no power outside this tower from what I can gather. Excellent observation Emi. 
+
+This can go one of two ways:
+
+1 - Flawless execution, and we all escape
+
+2 - Botched, and we may end up with a trial.
+
+In case of the latter, I&#39;ll fight my hardest to get out by myself. Yes, this is basically me admitting to killing somebody. No one will know however, of course they won&#39;t. I have everything needed to cover it all up. And in case of emergency, whoever I work with will be able to back me up. Sacrifices are necessary in order to bring about the end. It pains me to say it, but I will sacrifice someone in order to get everyone else out. It may be a bit of backwards thinking, but it&#39;s the only thing I can think of. 
+
+Not like Process is any useful despite his claims. Maybe he&#39;ll be my victim if he isn&#39;t the killer for this body. Oh yeah, Mini and the pianist boy were killed. I&#39;m one hundred percent going to send the killer out with indifference like I always do. 
+
+Part of me hopes this will be over with quickly. After that last one...oh god... Anyways, I have a to get the information out to whoever is with me in this. And if one of us really betrays the rest, I have my own...let&#39;s say &quot;decisions&quot; to execute...
+
+I won&#39;t hesitate anymore.</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">14-Feb-21 12:49 PM</span>
+
+            <div class="chatlog__message " data-message-id="810568431874080840" id="message-810568431874080840">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 28...
+
+The plan has been put in motion. 
+
+But first, I didn&#39;t write last night because I slept with Coco. It was fun, but it would better to have a sleepover once we&#39;ve all escaped together. 
+
+Anyways, I&#39;ve assembled what I believe to be a competent team so we can end this all together. 
+
+- Piece
+- Element
+- Tide
+- Blossom
+- Coco(?)
+- And someone new. I&#39;m naming him Spectre
+
+I&#39;ll get a couple more people just to reinforce our ranks. The more people that know, the better. This plan can&#39;t be taken lightly, so the more that people know, the better chance we have. It will happen in around five days now, so that will give us time to adjust to anything that the liberal can throw at us. He can&#39;t do much to stop us seeing as we&#39;re still following the rules. I&#39;m still expecting some sort of retaliation though. I&#39;m preparing for whatever could be thrown at us. If he decides to throw in another catalyst to make us murder then...
+
+I&#39;ll have to step in.
+
+What I&#39;m not telling anybody is that my second plan is something that will be kept a secret. It&#39;s all just a ruse for my true intentions. Escape is necessary, and I can&#39;t see it coming to us without sacrifice. As I promised everyone else, there will be no blood on their hands. If I can manipulate them into sacrificing someone else so I can work with some outside force to bring an end to this, I will. The way I see it, there&#39;s only more death to come. I&#39;ll be the one to make sure that the death is relatively painless. My plan for this is simple, but I can&#39;t write it here yet. There could be someone watching. 
+
+Coco&#39;s in my room right now. I can&#39;t worry her with all this. She may be asleep, but what if she&#39;s just acting? She could very well be watching me. I have to keep my confident nature up. I&#39;m terrified of what&#39;s coming up...I can&#39;t let more people die for nothing.
+
+I&#39;ll give it a purpose.
+
+I&#39;ll end it all.
+
+Operation: Blakeout. 
+
+They&#39;re going to love this. And, if all else fails, I&#39;ll make them hate me...</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">15-Feb-21 03:12 AM</span>
+
+            <div class="chatlog__message " data-message-id="810785700764844042" id="message-810785700764844042">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 29
+
+I&#39;m gonna take the next few days off to relax. I can&#39;t let all of this stress cause me to hesitate in the moment. People will die, that&#39;s a given. I&#39;ll do everything in my power to make sure that no one on my side dies. Those that have agreed to join me...they&#39;re my priority. It&#39;s selfish, but I need to look after the people that are helping me first... Without a team, the individual will just crumble.
+
+I have all the ideas, I just need to put it out there for everyone else.
+
+If I fail, then it&#39;s the end...
+
+So if I&#39;m dead and someone&#39;s reading this. I&#39;m sorry for the mistakes I made. I put you all in danger, and paid the ultimate price. It was my decision, so it&#39;s no one&#39;s fault but mine. 
+
+I&#39;m the Ultimate Paradigm. I just hope you all can still see me as someone to look up to regardless...</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">16-Feb-21 09:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="811427976712814674" id="message-811427976712814674">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 30...
+
+Late yes. I&#39;ll write something again in a little bit.
+
+I&#39;ve been stressing out so much...
+
+Operation: Blakeout is soon...</div></span>
+
+                                <span class="chatlog__edited-timestamp" title="17-Feb-21 10:32 AM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">17-Feb-21 02:40 AM</span>
+
+            <div class="chatlog__message " data-message-id="811502344536719361" id="message-811502344536719361">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 31
+
+I did nothing today, but for good reason. I am terrified of what I&#39;m about to do. I&#39;ll be leading them, and at the same time...I&#39;ll do the very thing I hate in people...deceive them. I just hope it can be forgiven.
+
+I&#39;ve given up on trying to do anything to Process. He&#39;s a non-factor. Not worth it at all. I&#39;d be surprised if he were actually trying anything at this point. Well that&#39;s whatever.
+
+There&#39;s no point even trying to hide it in my diary anymore...
+
+Operation: Blakeout is a cover for my secret plan, Operation: Fallen Angel. As I&#39;ve said before, I&#39;m gonna be killing someone. I&#39;ll let Piece in on this so that we can get what we want out of this. She&#39;ll listen to me. I respect that.
+
+I can&#39;t think of how the others will react when the truth is revealed. I just have to keep on moving forward, even if that means death comes... I&#39;m truly sorry
+
+Coco, you especially...
+
+We&#39;ll see how this all plays out. Never falter. No weakness. I&#39;m the Ultimate Paradigm. I know exactly how to play off the situation that&#39;s coming. And as someone to look up to, hopefully they&#39;ll have enough faith in me to do the right thing. 
+
+This secret plan is the right thing.
+
+That&#39;s all from me.
+
+Time to get some sleep... As much as I can get. I&#39;m shaking...</div></span>
+
+                                <span class="chatlog__edited-timestamp" title="17-Feb-21 10:32 AM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">18-Feb-21 03:03 AM</span>
+
+            <div class="chatlog__message " data-message-id="811870558538170398" id="message-811870558538170398">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 32...
+
+Musical chairs? This time with injuries... Weird...
+
+Can you feel the desperation in my writing?
+
+Yeah...
+
+It&#39;s starting to take form...</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">19-Feb-21 02:29 AM</span>
+
+            <div class="chatlog__message " data-message-id="812224277922971668" id="message-812224277922971668">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 33...
+
+Teardrops have lined the pages of the past few entries. 
+
+As the day draws near, I become a lot more worried about what&#39;s going to take place. As the ringmaster behind all of this, I have to make sure that the show goes smoothly.
+
+I&#39;m going to end this game by my own means. 
+
+Phase 1 is me getting away with murder. This entire plan is dependent on me speaking my way out of it. I&#39;m ready for failure, and l&#39;ve already accepted my death if it comes. 
+
+That&#39;s all I have to say.
+
+For now all we have to do is live through this messed up mini game of musical chairs...
+
+Maybe ringmaster works better than blue blood...</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">20-Feb-21 02:41 AM</span>
+
+            <div class="chatlog__message " data-message-id="812589637587566596" id="message-812589637587566596">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 34 
+
+Everything is ready. I have all my tools, I have the note, and I have the perfect way to lure my...sacrifice... It still doesn&#39;t sit well with me that this is how I&#39;m gonna be doing things, but I&#39;m not gonna look back now. I&#39;ve put myself in too deep. Since crossing that point of no return, I&#39;ve dedicated myself to ending this. If all goes well, I&#39;ll win. I get out, then I can gather up forces to free the rest of them. I honestly don&#39;t see how anyone else is looking at it like this. Why couldn&#39;t they give an excuse like they would fight outside to get us out. I&#39;m sure that would&#39;ve given us some hope...
+
+Oh well. It&#39;s all up to me now.
+
+I won&#39;t stand for those three...the Liberal, Apathy, and Blank Page... The three hosts. How can they just do this to us. I would get answers through any means necessary, but I have to keep my focus on Operation: Fallen Angel. That&#39;s my top priority. Executing the plan is the most important thing to me currently. Piece, being a major player in this plan, should honestly be let in on this. I&#39;ll tell her tomorrow morning. I just need...yeah... It&#39;s better if I don&#39;t write it out. Other people will end up seeing this.
+
+To those that are reading my entries, I hope you can see my descent into this madness...
+
+It keeps me going. I&#39;m alive. That&#39;s what matters. My priorities have to be selfish so that I can be selfless later on. I would gladly sacrifice myself if it guaranteed everyone getting out of here, but as it stands, I would just be another head for the collection. It will only lead to more people dying. 
+
+I can&#39;t have that.
+
+After my murder takes place, no one has to die afterwards. Absolutely no one. Not even you Process. As much as a tool you are, I don&#39;t wish death upon you. In previous entries it seemed like that, but that was all impulsive writing. I truly mean no harm. Whether or not you believe me...I couldn&#39;t care. I just need to communicate these things to give myself peace of mind. 
+
+That&#39;s the dream...</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">21-Feb-21 02:58 AM</span>
+
+            <div class="chatlog__message " data-message-id="812956404545617960" id="message-812956404545617960">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Day 35...
+
+I did it. I killed someone. I&#39;m still terrified. They&#39;re gonna hate me once they find out. 
+
+I&#39;m sorry for what I&#39;ve done, but it&#39;s necessary in order to reach the end I&#39;ve envisioned.
+
+Operation: Blakeout, well, if you&#39;re reading this, you already know, is a ruse.
+
+Guess I&#39;ll let you all in on it now. I&#39;ll admit it, Process was correct. There is no way to harm a host. I never wanted to kill them in the first place. I was swelling with hidden anger when this idea came to me. Why not make my own trial? To do that, I would have to sacrifice someone. So, I took out who I believed would be the biggest threat (ic). And besides, she was kind of a ghost. No one really thought much of her right? Even so, a life is a life, and I&#39;ll forever have to deal with this sin. Even if I&#39;m to escape after the trial, there&#39;s no guarantee that I&#39;ll be able to pull of phase two of my plan.
+
+What&#39;s phase two? 
+
+Simple. I spread the news, and gather up forces. Based off what happened a few days ago, it would be best to try to locate the forces that messed with the tower. There are people out there. I&#39;m going to find them. And then with my info, we&#39;ll take them down. I just hope I&#39;m not too late to act. I should&#39;ve thought of this earlier on in the game. At least then if I were found out, I could&#39;ve gone out with little else on my mind. Right now, there&#39;s too much going on up there.
+
+What am I feeling now...
+
+Is it sadness? Fear? Optimism? I don&#39;t know. It feels both positive and negative. It keeps me going, but I don&#39;t want it to take over me. 
+
+And I&#39;ll have to figure out how to act if they do find me out. Based off of today, they&#39;re already gonna be suspecting me. I have some plans just in case. The Ultimate Paradigm knows exactly how to act around people at any given moment. Everything I do is just an act to fit in huh. It&#39;s artificial to the point that it feels and looks natural on me. That&#39;s not healthy. Maybe I should just be honest in the end if they figure it out...</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">22-Feb-21 08:15 PM</span>
+
+            <div class="chatlog__message " data-message-id="813579655813922886" id="message-813579655813922886">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">My final entry...
+
+Regardless of what happens during the trial, I want you all to know that this plan was a very high risk high reward one. The risk meaning my own life, the reward being all of us eventually getting out of here. If you&#39;re reading this, then things went either way I assume. I can&#39;t regret it anymore, Chiko would&#39;ve just said to keep going regardless of the losses. The narrative according to her never changes for one person. 
+
+We&#39;re all a team, and I broke off from you all to pull off this extreme idea of mine... Well, now that doesn&#39;t matter. The following things are meant to give you all one last smile from me if I have died. 
+
+So really, I have you all to thank. You have my utmost respect for being able to get through this.
+
+If I&#39;m dead, I don&#39;t want any of you to miss me. Just remember what I tried, and smile because there was someone fighting.
+
+Coco: Thank you for being who you are. If things were different, maybe our lives would be a lot more fun together. Make sure you keep on being your sweet self okay? I don&#39;t doubt your abilities whatsoever.
+
+Piece: Out of everyone, you&#39;re probably the one I could level with the most. Mainly because of our plan but that&#39;s irrelevant now. I do consider you a friend. Thank you for that.
+
+I&#39;m sorry to everyone else, but honestly I&#39;m not as involved with the rest of you to actually say something personal. Maybe a couple of things you&#39;ve never known about me should suffice. After all, learning about someone is fun right?
+
+Don&#39;t let me strike you all as weird for this...
+
+- For those that were wondering, I am actually attracted to girls so haha...
+- If you couldn&#39;t tell, I&#39;m technically the Ultimate Model but I got everyone to call me a Paradigm instead
+- I live with my adoptive siblings. They&#39;re also Ultimates, which was really cool
+- My least favourite word in existence is &quot;Perfect&quot;
+- I was scared this entire time. Funny
+
+That&#39;s all from me.
+
+Emilia Fujisaki, Ultimate Paradigm, signing out...
+
+Goodbye...</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">23-Feb-21 07:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="813931036148891699" id="message-813931036148891699">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((reveal me owo</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/1a2d616227b27197d2bee9189a104dad-7A796.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Laplace&#39;s Elkian#8290" data-user-id="221760256697565185" style="color: rgb(220,20,60)">Emi saved the world</span>
+
+
+        <span class="chatlog__timestamp">23-Feb-21 08:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="813951543178952734" id="message-813951543178952734">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="pre pre--multiline nohighlight">Secret Entry???
+
+The page is filled with scribbles and a random jumble of words. Names, and objects of importance. 
+
+Interesting...
+
+Things listed and/or drawn:
+- A heart
+- Chizue
+- Seiya
+- Takeo
+- Kohaku
+- Genetics
+- Give up
+- Hope
+- Farewell
+- A game of Hangman
+- A target
+- A rainbow</div>
+
+<em>What could this mean?</em></span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction">
+                                <img class="emoji emoji--small" alt="umstare" title="umstare" src="Danganronpa_%20Prospective%20Despair%20-%20Diaries%20%28KG%29%20-%20emilias-diary%20%5B800518381085261844%5D.html_Files/786719613823614986-F3A4C.png">
+                                <span class="chatlog__reaction-count">4</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+</div>
+
+<div class="postamble">
+    <div class="postamble__entry">Exported 40 message(s)</div>
+</div>
+
+</body>
+
+</html>
