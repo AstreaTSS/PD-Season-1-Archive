@@ -24,4 +24,4 @@ All Rooms:
 * [#kaeru-sasaki](https://sonic4999.github.io/PD-Season-1-Archive/Dorms/Danganronpa_%20Prospective%20Despair%20-%20Dorms%20(KG)%20-%20kaeru-sasaki%20%5B803388684275154994%5D.html)
 * [#mist-actium](https://sonic4999.github.io/PD-Season-1-Archive/Dorms/Danganronpa_%20Prospective%20Despair%20-%20Dorms%20(KG)%20-%20mist-actium%20%5B803429735153532938%5D.html)
 
-[Back to Home](https://sonic4999.github.io/PD-Season-1-Archive/HOME)
+[Back to Home](https://sonic4999.github.io/PD-Season-1-Archive/)

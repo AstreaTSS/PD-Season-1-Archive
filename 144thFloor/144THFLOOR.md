@@ -7,4 +7,4 @@ All Rooms:
 * [#control-room](https://sonic4999.github.io/PD-Season-1-Archive/144thFloor/Danganronpa_%20Prospective%20Despair%20-%20The%20Tower%2C%20144th%20Floor%20(KG)%20-%20control-room%20%5B800756341211529239%5D.html)
 * [#medbay](https://sonic4999.github.io/PD-Season-1-Archive/144thFloor/Danganronpa_%20Prospective%20Despair%20-%20The%20Tower%2C%20144th%20Floor%20(KG)%20-%20medbay%20%5B800756432039182354%5D.html)
 
-[Back to Home](https://sonic4999.github.io/PD-Season-1-Archive/HOME)
+[Back to Home](https://sonic4999.github.io/PD-Season-1-Archive/)

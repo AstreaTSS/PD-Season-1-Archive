@@ -7,4 +7,4 @@ All Diaries:
 * [Derek's Diary](https://sonic4999.github.io/PD-Season-1-Archive/Diaries/Danganronpa_%20Prospective%20Despair%20-%20Diaries%20(KG)%20-%20dereks-diary%20%5B803268703391186944%5D.html)
 * [Minestrone's Diary](https://sonic4999.github.io/PD-Season-1-Archive/Diaries/Danganronpa_%20Prospective%20Despair%20-%20Diaries%20(KG)%20-%20minestrones-diary%20%5B809810099358269451%5D.html)
 
-[Back to Home](https://sonic4999.github.io/PD-Season-1-Archive/HOME)
+[Back to Home](https://sonic4999.github.io/PD-Season-1-Archive/)

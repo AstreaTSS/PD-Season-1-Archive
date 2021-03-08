@@ -9,4 +9,4 @@ By Chapter:
 * [Chapter 6, Part 1](https://sonic4999.github.io/PD-Season-1-Archive/TrialRoom/Danganronpa_%20Prospective%20Despair%20-%20Trial%20Room%20-%20trial-6-p1%20%5B813937140298809404%5D.html)
 * [Chapter 6, Part 2](https://sonic4999.github.io/PD-Season-1-Archive/TrialRoom/Danganronpa_%20Prospective%20Despair%20-%20Trial%20Room%20-%20trial-6-p2%20%5B813937164844400661%5D.html)
 
-[Back to Home](https://sonic4999.github.io/PD-Season-1-Archive/HOME)
+[Back to Home](https://sonic4999.github.io/PD-Season-1-Archive/)

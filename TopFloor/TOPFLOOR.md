@@ -11,4 +11,4 @@ All Rooms:
 * [#cinema-room](https://sonic4999.github.io/PD-Season-1-Archive/TopFloor/Danganronpa_%20Prospective%20Despair%20-%20The%20Tower%2C%20Top%20Floor%20(KG)%20-%20cinema-room%20%5B787517878063857664%5D.html)
 * [#elevator](https://sonic4999.github.io/PD-Season-1-Archive/TopFloor/Danganronpa_%20Prospective%20Despair%20-%20The%20Tower%2C%20Top%20Floor%20(KG)%20-%20elevator%20%5B787513690710605895%5D.html)
 
-[Back to Home](https://sonic4999.github.io/PD-Season-1-Archive/HOME)
+[Back to Home](https://sonic4999.github.io/PD-Season-1-Archive/)

@@ -7,4 +7,4 @@ All Rooms:
 * [#kitchen](https://sonic4999.github.io/PD-Season-1-Archive/146thFloor/Danganronpa_%20Prospective%20Despair%20-%20The%20Tower%2C%20146th%20Floor%20(KG)%20-%20kitchen%20%5B800752982508961832%5D.html)
 * [#library](https://sonic4999.github.io/PD-Season-1-Archive/146thFloor/Danganronpa_%20Prospective%20Despair%20-%20The%20Tower%2C%20146th%20Floor%20(KG)%20-%20library%20%5B800751811992485899%5D.html)
 
-[Back to Home](https://sonic4999.github.io/PD-Season-1-Archive/HOME)
+[Back to Home](https://sonic4999.github.io/PD-Season-1-Archive/)
